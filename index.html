@@ -1,0 +1,1780 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RecoverAI — Unified Platform</title>
+
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+
+  --bg:#0a0a0c;--bg2:#111114;--bg3:#18181d;--card:#1e1e24;--card2:#242429;
+
+  --border:#28282f;--border2:#34343c;--border3:#42424c;
+
+  --text:#f2f2f6;--text2:#a0a0b0;--text3:#58586a;
+
+  --teal:#1D9E75;--teal2:#5DCAA5;--teal3:rgba(29,158,117,0.1);
+
+  --blue:#378ADD;--blue2:#85B7EB;
+
+  --amber:#EF9F27;--amber2:#FAC775;
+
+  --coral:#D85A30;--coral2:#F0997B;
+
+  --purple:#7F77DD;--purple2:#AFA9EC;
+
+  --green2:#97C459;
+
+  --r:10px;--r2:14px;
+
+}
+
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;overflow-x:hidden}
+
+
+
+
+/* ─── GLOBAL NAV ─── */
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;border-bottom:1px solid var(--border);background:rgba(10,10,12,0.97);position:sticky;top:0;z-index:300;backdrop-filter:blur(8px)}
+
+.nav-logo{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:700;cursor:pointer;color:var(--text);text-decoration:none}
+
+.logo-mk{width:28px;height:28px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+.nav-links{display:flex;gap:2px}
+
+.nav-lnk{font-size:13px;color:var(--text2);cursor:pointer;padding:7px 14px;border-radius:var(--r);transition:all .18s;white-space:nowrap;border:none;background:transparent}
+
+.nav-lnk:hover{background:var(--bg3);color:var(--text)}
+
+.nav-lnk.on{color:var(--text);background:var(--bg3)}
+
+.nav-cta{background:var(--teal);color:#fff;font-size:13px;font-weight:600;padding:8px 20px;border-radius:var(--r);border:none;cursor:pointer;transition:opacity .2s;white-space:nowrap}
+
+.nav-cta:hover{opacity:.85}
+
+
+
+
+/* ─── PAGES ─── */
+
+.page{display:none}
+
+.page.active{display:block}
+
+
+
+
+/* ══════════════════════════════════════
+
+   HOME PAGE
+
+══════════════════════════════════════ */
+
+.home-wrap{position:relative;min-height:calc(100vh - 60px);display:flex;overflow:hidden}
+
+.hero-left{flex:0 0 52%;padding:72px 56px 72px 40px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+
+.badge{display:inline-flex;align-items:center;gap:7px;background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.22);border-radius:30px;padding:5px 14px;font-size:12px;color:var(--teal2);font-weight:500;margin-bottom:22px}
+
+.badge-pulse{width:6px;height:6px;border-radius:50%;background:var(--teal2);animation:pulse 2s infinite}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.hero-left h1{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-1.4px;margin-bottom:18px;color:var(--text)}
+
+.hero-left h1 em{font-style:normal;color:var(--teal)}
+
+.hero-desc{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:36px;max-width:420px}
+
+.hero-btns{display:flex;gap:12px;margin-bottom:52px}
+
+.btn-p{background:var(--teal);color:#fff;font-size:14px;font-weight:600;padding:14px 28px;border-radius:var(--r);border:none;cursor:pointer;transition:opacity .2s}
+
+.btn-p:hover{opacity:.85}
+
+.btn-g{background:transparent;color:var(--text);font-size:14px;padding:14px 24px;border-radius:var(--r);border:1px solid var(--border2);cursor:pointer;transition:all .2s}
+
+.btn-g:hover{background:var(--bg3)}
+
+.stats{display:flex;gap:40px}
+
+.stat .n{font-size:26px;font-weight:800;letter-spacing:-.5px;display:block}
+
+.stat .l{font-size:12px;color:var(--text3);margin-top:2px}
+
+.mg-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:36px}
+
+.chip{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:500;color:var(--text2);background:rgba(255,255,255,0.04);border:1px solid var(--border2);padding:7px 14px;border-radius:20px;cursor:pointer;transition:all .18s}
+
+.chip:hover{background:rgba(255,255,255,0.08);color:var(--text);border-color:var(--border3)}
+
+.chip-dot{width:7px;height:7px;border-radius:50%}
+
+
+
+
+/* ANATOMY PANEL */
+
+.hero-right{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+
+.hero-right::before{content:"";position:absolute;left:0;top:0;bottom:0;width:200px;background:linear-gradient(to right,var(--bg) 0%,transparent 100%);z-index:2;pointer-events:none}
+
+.hero-right::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(29,158,117,0.07) 0%,transparent 70%);pointer-events:none;z-index:1}
+
+.anatomy-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px 0}
+
+.zone-dot{position:absolute;cursor:pointer;z-index:5;transform:translate(-50%,-50%)}
+
+.zone-dot-ring{width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.1);transition:all .2s;position:relative}
+
+.zone-dot:hover .zone-dot-ring{width:14px;height:14px;background:rgba(29,158,117,0.5);border-color:var(--teal2);transform:translate(-2px,-2px)}
+
+.zone-lbl{position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%) translateX(28px);font-size:11px;font-weight:600;color:rgba(255,255,255,0.35);white-space:nowrap;letter-spacing:.04em;transition:color .2s;pointer-events:none}
+
+.zone-dot:hover .zone-lbl{color:var(--teal2)}
+
+
+
+
+/* ══════════════════════════════════════
+
+   EXPLORE PAGE
+
+══════════════════════════════════════ */
+
+.exp-layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 60px)}
+
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:6px 0;overflow-y:auto}
+
+.sb-hdr{padding:14px 18px 8px;font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.07em;text-transform:uppercase}
+
+.sg-btn{width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:13px;font-weight:600;padding:9px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .15s}
+
+.sg-btn:hover,.sg-btn.on{background:var(--bg3)}
+
+.sg-btn.on{color:var(--teal2)}
+
+.sg-dw{display:flex;align-items:center;gap:8px}
+
+.sg-d{width:8px;height:8px;border-radius:50%}
+
+.chv{font-size:10px;color:var(--text3);transition:transform .2s}
+
+.chv.o{transform:rotate(90deg)}
+
+.subs{display:none;padding:2px 0 4px}
+
+.subs.o{display:block}
+
+.sub-b{width:100%;text-align:left;background:transparent;border:none;color:var(--text2);font-size:12px;padding:6px 18px 6px 34px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .15s}
+
+.sub-b:hover{color:var(--text);background:var(--bg3)}
+
+.sub-b.on{color:var(--teal2);font-weight:500}
+
+.sub-tk{width:5px;height:5px;border-radius:50%}
+
+.bcrumb{display:flex;align-items:center;gap:10px;padding:10px 36px;border-bottom:1px solid var(--border);background:var(--bg2)}
+
+.back-b{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--text2);cursor:pointer;padding:5px 11px;border-radius:8px;border:1px solid var(--border);background:transparent;transition:all .18s}
+
+.back-b:hover{color:var(--text)}
+
+.bc-txt{font-size:13px;color:var(--text3)}
+
+.bc-txt span{color:var(--teal2)}
+
+.main-p{padding:32px 40px;overflow-y:auto;max-height:calc(100vh - 98px)}
+
+.d-tag{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+
+.d-h{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+
+.d-desc{font-size:14px;color:var(--text2);line-height:1.65;max-width:540px;margin-bottom:24px}
+
+.f-row{display:flex;gap:7px;margin-bottom:24px;flex-wrap:wrap}
+
+.f-b{font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s}
+
+.f-b:hover{color:var(--text)}
+
+.f-b.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+.s-hdr{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
+
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:32px}
+
+.ex-c{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s}
+
+.ex-c:hover{border-color:var(--border3);transform:translateY(-2px)}
+
+.vid-slot{position:relative;width:100%;height:148px;background:#0a0a0e;overflow:hidden}
+
+.vid-slot video{width:100%;height:100%;object-fit:cover;display:block}
+
+.vid-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+
+.vid-overlay.hidden{display:none}
+
+.vid-poster-icon{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center}
+
+.vid-poster-label{font-size:10px;color:var(--text3);font-family:monospace}
+
+.play-ring{position:absolute;bottom:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(29,158,117,.88);display:flex;align-items:center;justify-content:center;transition:transform .15s;z-index:2}
+
+.ex-c:hover .play-ring{transform:scale(1.1)}
+
+.dur-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.07);border-radius:5px;font-size:10px;color:rgba(255,255,255,.65);padding:2px 7px;z-index:2}
+
+.type-badge{position:absolute;top:8px;right:8px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:5px;z-index:2}
+
+.tb-p{background:rgba(100,153,34,.75);color:#d4f5a0}
+
+.tb-r{background:rgba(29,158,117,.75);color:#b0f0d8}
+
+.tb-b{background:rgba(55,138,221,.75);color:#b8d8f8}
+
+.upload-cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(10,10,14,.85);opacity:0;transition:opacity .2s;z-index:3}
+
+.ex-c:hover .upload-cta{opacity:1}
+
+.upload-cta label{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--teal2);cursor:pointer;padding:7px 14px;border-radius:8px;border:1px solid rgba(29,158,117,.4);background:rgba(29,158,117,.1)}
+
+.upload-cta input[type=file]{display:none}
+
+.upload-cta .or-open{font-size:11px;color:var(--text3)}
+
+.ex-bd{padding:13px 15px}
+
+.ex-nm{font-size:14px;font-weight:700;margin-bottom:3px}
+
+.ex-st{font-size:12px;color:var(--text3);margin-bottom:9px}
+
+.ex-ft{display:flex;align-items:center;justify-content:space-between}
+
+.pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px}
+
+.pp{background:rgba(100,153,34,.14);color:#97C459}
+
+.pr{background:rgba(29,158,117,.14);color:var(--teal2)}
+
+.pb{background:rgba(55,138,221,.14);color:#85B7EB}
+
+.ex-ph{font-size:10px;color:var(--text3)}
+
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px;color:var(--text3);text-align:center;gap:10px}
+
+.empty p{font-size:14px}
+
+
+
+
+/* ══════════════════════════════════════
+
+   TRACKER PAGE
+
+══════════════════════════════════════ */
+
+.tracker-wrap{padding:32px 40px;max-width:1200px;margin:0 auto}
+
+.tracker-hero{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:28px}
+
+.t-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px}
+
+.t-stat-n{font-size:28px;font-weight:800;letter-spacing:-.6px;margin-bottom:3px}
+
+.t-stat-l{font-size:12px;color:var(--text3)}
+
+.t-stat-trend{font-size:11px;margin-top:6px;display:flex;align-items:center;gap:4px}
+
+.trend-good{color:var(--teal2)}
+
+.trend-warn{color:var(--amber2)}
+
+.section-title-t{font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;letter-spacing:-.2px}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+
+.t-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:18px}
+
+.log-form{display:flex;flex-direction:column;gap:12px}
+
+.log-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+
+.log-label{font-size:13px;color:var(--text2);flex:1}
+
+.pain-slider{flex:2;accent-color:var(--teal)}
+
+.pain-val{font-size:13px;font-weight:600;color:var(--text);min-width:20px;text-align:right}
+
+.log-btn{width:100%;background:var(--teal);color:#fff;font-size:14px;font-weight:600;padding:12px;border-radius:var(--r);border:none;cursor:pointer;margin-top:4px;transition:opacity .18s}
+
+.log-btn:hover{opacity:.85}
+
+.timeline-rows{display:flex;flex-direction:column;gap:8px}
+
+.tl-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border)}
+
+.tl-day{font-size:12px;font-weight:600;color:var(--text);min-width:60px}
+
+.tl-bar-wrap{flex:1;height:6px;background:var(--border2);border-radius:3px;overflow:hidden}
+
+.tl-bar{height:100%;border-radius:3px;transition:width .4s}
+
+.tl-val{font-size:12px;color:var(--text2);min-width:32px;text-align:right}
+
+.tl-rom{font-size:11px;color:var(--teal2);min-width:44px;text-align:right}
+
+.milestones{display:flex;flex-direction:column;gap:8px}
+
+.ms-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--r);border:1px solid var(--border)}
+
+.ms-row.done{background:rgba(29,158,117,0.06);border-color:rgba(29,158,117,0.2)}
+
+.ms-row.upcoming{background:var(--bg3)}
+
+.ms-row.current{background:rgba(239,159,39,0.06);border-color:rgba(239,159,39,0.25)}
+
+.ms-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px}
+
+.ms-icon.done{background:rgba(29,158,117,0.15);color:var(--teal2)}
+
+.ms-icon.current{background:rgba(239,159,39,0.15);color:var(--amber2)}
+
+.ms-icon.upcoming{background:var(--border);color:var(--text3)}
+
+.ms-info{flex:1}
+
+.ms-name{font-size:13px;font-weight:600;color:var(--text)}
+
+.ms-sub{font-size:11px;color:var(--text3);margin-top:1px}
+
+.ms-days{font-size:12px;font-weight:600}
+
+.streak-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px}
+
+.sg-day{aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600}
+
+.sg-done{background:rgba(29,158,117,0.5);color:var(--teal2)}
+
+.sg-rest{background:var(--border);color:var(--text3)}
+
+.sg-today{background:var(--teal);color:#fff}
+
+.sg-skip{background:rgba(239,159,39,0.2);color:var(--amber2)}
+
+.sg-label{font-size:10px;color:var(--text3);text-align:center;margin-top:2px}
+
+
+
+
+/* ══════════════════════════════════════
+
+   PT PORTAL PAGE
+
+══════════════════════════════════════ */
+
+.pt-wrap{padding:32px 40px;max-width:1200px;margin:0 auto}
+
+.pt-hero-block{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:20px;display:flex;align-items:center;gap:24px}
+
+.pt-badge-block{background:rgba(55,138,221,0.1);border:1px solid rgba(55,138,221,0.25);border-radius:var(--r2);padding:12px 16px;display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;min-width:88px}
+
+.pt-badge-n{font-size:24px;font-weight:800;color:var(--blue2)}
+
+.pt-badge-l{font-size:10px;color:var(--text3);text-align:center}
+
+.pt-hero-txt h2{font-size:20px;font-weight:700;letter-spacing:-.3px;margin-bottom:6px}
+
+.pt-hero-txt p{font-size:13px;color:var(--text2);line-height:1.6;max-width:480px}
+
+.pt-btn{background:var(--blue);color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:var(--r);border:none;cursor:pointer;white-space:nowrap;flex-shrink:0}
+
+.pt-btn:hover{opacity:.85}
+
+.patients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:24px}
+
+.patient-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px;cursor:pointer;transition:border-color .2s}
+
+.patient-card:hover{border-color:var(--border3)}
+
+.pc-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+
+.pc-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+
+.pc-name{font-size:14px;font-weight:600;color:var(--text)}
+
+.pc-injury{font-size:12px;color:var(--text3)}
+
+.pc-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+
+.pc-m-item{background:var(--bg3);border-radius:8px;padding:8px 10px;text-align:center}
+
+.pc-m-n{font-size:14px;font-weight:700}
+
+.pc-m-l{font-size:10px;color:var(--text3)}
+
+.pc-status{margin-top:10px;display:flex;align-items:center;justify-content:space-between}
+
+.status-pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px}
+
+.sp-on{background:rgba(29,158,117,.14);color:var(--teal2)}
+
+.sp-warn{background:rgba(239,159,39,.14);color:var(--amber2)}
+
+.sp-behind{background:rgba(216,90,48,.14);color:var(--coral2)}
+
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px}
+
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:20px;position:relative}
+
+.price-card.featured{border:2px solid var(--blue)}
+
+.price-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+
+.price-amount{font-size:32px;font-weight:800;letter-spacing:-.8px;margin-bottom:4px}
+
+.price-period{font-size:12px;color:var(--text3)}
+
+.price-desc{font-size:13px;color:var(--text2);margin:12px 0;line-height:1.55}
+
+.price-features{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+
+.price-features li{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2)}
+
+.pf-check{width:14px;height:14px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+
+.pf-yes{background:rgba(29,158,117,.15);color:var(--teal2)}
+
+.pf-no{background:var(--border);color:var(--text3)}
+
+.price-cta{width:100%;padding:11px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text)}
+
+.price-cta.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+.price-cta:hover{opacity:.85}
+
+.featured-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:10px;font-weight:600;padding:3px 12px;border-radius:0 0 8px 8px;letter-spacing:.04em}
+
+
+
+
+
+
+
+/* ══════════════════════════════════════
+
+   VIDEO MODAL
+
+══════════════════════════════════════ */
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:600;display:none;align-items:center;justify-content:center}
+
+.overlay.o{display:flex}
+
+.modal{background:var(--card);border:1px solid var(--border2);border-radius:var(--r2);width:700px;max-width:96vw;max-height:92vh;overflow-y:auto}
+
+.modal-top{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card);z-index:1}
+
+.modal-ttl{font-size:16px;font-weight:700}
+
+.modal-x{width:28px;height:28px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+.modal-x:hover{background:var(--border2);color:var(--text)}
+
+.modal-vid-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#060608;overflow:hidden}
+
+.modal-vid-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+
+.modal-no-vid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#0a0a0e}
+
+.mno-circle{width:64px;height:64px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center}
+
+.mno-path{font-size:12px;color:var(--teal2);font-family:monospace;background:var(--bg3);padding:6px 14px;border-radius:6px;border:1px solid var(--border)}
+
+.mno-hint{font-size:12px;color:var(--text3);text-align:center;max-width:300px;line-height:1.6}
+
+.mno-upload label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--teal2);cursor:pointer;padding:8px 20px;border-radius:var(--r);border:1px solid rgba(29,158,117,.4);background:rgba(29,158,117,.1);margin-top:4px}
+
+.mno-upload input[type=file]{display:none}
+
+.vid-controls{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#08080c;border-bottom:1px solid var(--border)}
+
+.ctrl-btn{background:transparent;border:none;cursor:pointer;color:var(--text2);display:flex;align-items:center;padding:4px;border-radius:6px}
+
+.ctrl-btn:hover{color:var(--text)}
+
+.prog-bar{flex:1;height:4px;background:var(--border2);border-radius:2px;cursor:pointer;overflow:hidden}
+
+.prog-fill{height:100%;background:var(--teal);width:0%;transition:width .15s linear}
+
+.time-d{font-size:11px;color:var(--text3);min-width:48px;text-align:right;font-variant-numeric:tabular-nums}
+
+.modal-bd{padding:20px 22px}
+
+.meta-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+
+.meta-i{background:var(--bg3);border-radius:var(--r);padding:11px 13px}
+
+.meta-lbl{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+
+.meta-v{font-size:13px;font-weight:600;color:var(--text)}
+
+.steps-lbl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:9px}
+
+.steps{display:flex;flex-direction:column;gap:7px}
+
+.step{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text2);line-height:1.5}
+
+.step-n{width:20px;height:20px;border-radius:50%;background:rgba(29,158,117,.1);border:1px solid rgba(29,158,117,.25);color:var(--teal2);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+
+.assign-note{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);margin-top:16px;padding:10px 14px;border:1px dashed var(--border2);border-radius:var(--r)}
+
+.assign-note code{color:var(--teal2);font-size:11px}
+
+</style>
+
+<!-- Mixpanel -->
+<script>
+(function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".split(" ");a.get_group=function(){function b(c){d[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));a.push([e,call2])}}for(var d={},e=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<j.length;c++)b(j[c]);return d};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";g=f.getElementsByTagName("script")[0];g.parentNode.insertBefore(e,g)}})(document,window.mixpanel||[]);
+mixpanel.init("10ba7808c33c481ed4b044c28d52431b", {track_pageview: true});
+</script>
+</head>
+
+<body>
+
+
+
+
+<!-- ═══════════ GLOBAL NAV ═══════════ -->
+
+<nav class="nav">
+
+  <a class="nav-logo" onclick="showPage('home')">
+
+    <div class="logo-mk"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v5M6.5 6l2.5-2.5M6.5 6l-2.5-2.5M4 10h5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    RecoverAI
+
+  </a>
+
+  <div class="nav-links">
+
+    <button class="nav-lnk on" id="nl-home"    onclick="showPage('home')">Home</button>
+
+    <button class="nav-lnk"    id="nl-explore" onclick="showPage('explore')">Explore</button>
+
+    <button class="nav-lnk"    id="nl-tracker" onclick="showPage('tracker')">Injury tracker</button>
+
+    <button class="nav-lnk"    id="nl-pt"      onclick="showPage('pt')">PT / OT portal</button>
+
+    <button class="nav-lnk"    id="nl-settings" onclick="showPage('settings')">Settings</button>
+
+  </div>
+
+  <button class="nav-cta" onclick="showPage('tracker')">Start tracking</button>
+
+</nav>
+
+
+
+
+<!-- ═══════════ HOME ═══════════ -->
+
+<div id="page-home" class="page active">
+
+  <div class="home-wrap">
+
+    <div class="hero-left">
+
+      <div class="badge"><div class="badge-pulse"></div>AI-powered recovery</div>
+
+      <h1>Train smart.<br><em>Recover faster.</em></h1>
+
+      <p class="hero-desc">Personalized injury prevention and recovery routines. Select a muscle group to explore video-guided exercise tutorials built for your body.</p>
+
+      <div class="hero-btns">
+
+        <button class="btn-p" onclick="showPage('explore')">Explore exercises</button>
+
+        <button class="btn-g" onclick="showPage('tracker')">Track my injury</button>
+
+      </div>
+
+      <div class="stats">
+
+        <div class="stat"><span class="n" style="color:var(--teal)">7</span><span class="l">Muscle groups</span></div>
+
+        <div class="stat"><span class="n" style="color:var(--blue)">40+</span><span class="l">Exercises</span></div>
+
+        <div class="stat"><span class="n" style="color:var(--amber)">3</span><span class="l">Recovery phases</span></div>
+
+      </div>
+
+      <div class="mg-chips">
+
+        <div class="chip" onclick="goExplore('shoulder')"><div class="chip-dot" style="background:#378ADD"></div>Shoulder</div>
+
+        <div class="chip" onclick="goExplore('chest')"><div class="chip-dot" style="background:#7F77DD"></div>Chest</div>
+
+        <div class="chip" onclick="goExplore('back')"><div class="chip-dot" style="background:#AFA9EC"></div>Back</div>
+
+        <div class="chip" onclick="goExplore('core')"><div class="chip-dot" style="background:#1D9E75"></div>Core</div>
+
+        <div class="chip" onclick="goExplore('hip')"><div class="chip-dot" style="background:#D85A30"></div>Hip</div>
+
+        <div class="chip" onclick="goExplore('knee')"><div class="chip-dot" style="background:#EF9F27"></div>Knee</div>
+
+        <div class="chip" onclick="goExplore('ankle')"><div class="chip-dot" style="background:#D85A30"></div>Ankle</div>
+
+      </div>
+
+    </div>
+
+    <div class="hero-right">
+
+      <div class="anatomy-wrap">
+
+        <svg id="anatomy-svg" viewBox="0 0 520 780" xmlns="http://www.w3.org/2000/svg" style="height:88%;max-height:680px;width:auto;opacity:0.13;filter:brightness(1.4)">
+
+          <ellipse cx="155" cy="52" rx="34" ry="40" fill="white"/>
+
+          <rect x="143" y="88" width="24" height="22" rx="4" fill="white"/>
+
+          <path d="M105 112 Q80 118 72 145 L65 230 Q63 255 78 265 L105 272 L120 320 L190 320 L205 272 L232 265 Q247 255 245 230 L238 145 Q230 118 205 112 Z" fill="white"/>
+
+          <path d="M105 118 Q78 125 65 155 L52 210 Q46 235 54 250 L62 265 Q68 272 78 268 L88 260 L95 220 L108 168 Z" fill="white"/>
+
+          <path d="M55 258 Q44 270 40 295 L36 330 Q34 348 42 358 L54 365 Q64 368 72 360 L78 342 L82 305 L70 268 Z" fill="white"/>
+
+          <ellipse cx="47" cy="372" rx="16" ry="20" fill="white"/>
+
+          <path d="M205 118 Q232 125 245 155 L258 210 Q264 235 256 250 L248 265 Q242 272 232 268 L222 260 L215 220 L202 168 Z" fill="white"/>
+
+          <path d="M255 258 Q266 270 270 295 L274 330 Q276 348 268 358 L256 365 Q246 368 238 360 L232 342 L228 305 L240 268 Z" fill="white"/>
+
+          <ellipse cx="263" cy="372" rx="16" ry="20" fill="white"/>
+
+          <path d="M120 320 L108 325 Q92 332 86 360 L80 400 Q76 430 84 455 L96 475 Q108 482 118 476 L130 460 L138 420 L142 372 L135 322 Z" fill="white"/>
+
+          <path d="M88 472 Q76 485 72 510 L68 548 Q66 572 74 586 L86 596 Q98 600 108 592 L116 576 L118 540 L118 490 L100 474 Z" fill="white"/>
+
+          <ellipse cx="88" cy="608" rx="22" ry="14" fill="white"/>
+
+          <path d="M190 320 L202 325 Q218 332 224 360 L230 400 Q234 430 226 455 L214 475 Q202 482 192 476 L180 460 L172 420 L168 372 L175 322 Z" fill="white"/>
+
+          <path d="M222 472 Q234 485 238 510 L242 548 Q244 572 236 586 L224 596 Q212 600 202 592 L194 576 L192 540 L192 490 L210 474 Z" fill="white"/>
+
+          <ellipse cx="222" cy="608" rx="22" ry="14" fill="white"/>
+
+          <g fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.2" stroke-linecap="round">
+
+            <path d="M110 135 Q135 145 155 140 Q175 145 200 135"/><path d="M108 155 Q135 168 155 163 Q175 168 202 155"/>
+
+            <line x1="155" y1="178" x2="155" y2="265"/><line x1="132" y1="195" x2="178" y2="195"/><line x1="130" y1="218" x2="180" y2="218"/><line x1="128" y1="240" x2="182" y2="240"/>
+
+            <path d="M100 118 Q92 130 88 148"/><path d="M210 118 Q218 130 222 148"/>
+
+            <path d="M74 168 Q70 190 68 212"/><path d="M236 168 Q240 190 242 212"/>
+
+            <path d="M110 335 Q105 370 102 410"/><path d="M126 332 Q124 370 122 415"/><path d="M200 335 Q205 370 208 410"/><path d="M184 332 Q186 370 188 415"/>
+
+            <ellipse cx="107" cy="468" rx="14" ry="10"/><ellipse cx="203" cy="468" rx="14" ry="10"/>
+
+            <path d="M96 490 Q92 525 90 558"/><path d="M114 492 Q114 528 112 560"/><path d="M194 490 Q198 525 200 558"/><path d="M216 492 Q216 528 218 560"/>
+
+            <path d="M140 92 Q148 100 155 102 Q162 100 170 92"/><path d="M115 112 Q135 107 155 106 Q175 107 195 112"/>
+
+            <path d="M105 205 Q98 228 96 252"/><path d="M205 205 Q212 228 214 252"/>
+
+          </g>
+
+          <g transform="translate(260,0)">
+
+            <ellipse cx="155" cy="52" rx="34" ry="40" fill="white"/>
+
+            <rect x="143" y="88" width="24" height="22" rx="4" fill="white"/>
+
+            <path d="M105 112 Q80 118 72 145 L65 230 Q63 255 78 265 L105 272 L120 320 L190 320 L205 272 L232 265 Q247 255 245 230 L238 145 Q230 118 205 112 Z" fill="white"/>
+
+            <path d="M105 118 Q78 125 65 155 L52 210 Q46 235 54 250 L62 265 Q68 272 78 268 L88 260 L95 220 L108 168 Z" fill="white"/>
+
+            <path d="M55 258 Q44 270 40 295 L36 330 Q34 348 42 358 L54 365 Q64 368 72 360 L78 342 L82 305 L70 268 Z" fill="white"/>
+
+            <ellipse cx="47" cy="372" rx="16" ry="20" fill="white"/>
+
+            <path d="M205 118 Q232 125 245 155 L258 210 Q264 235 256 250 L248 265 Q242 272 232 268 L222 260 L215 220 L202 168 Z" fill="white"/>
+
+            <path d="M255 258 Q266 270 270 295 L274 330 Q276 348 268 358 L256 365 Q246 368 238 360 L232 342 L228 305 L240 268 Z" fill="white"/>
+
+            <ellipse cx="263" cy="372" rx="16" ry="20" fill="white"/>
+
+            <path d="M120 320 L108 325 Q92 332 86 360 L80 400 Q76 430 84 455 L96 475 Q108 482 118 476 L130 460 L138 420 L142 372 L135 322 Z" fill="white"/>
+
+            <path d="M88 472 Q76 485 72 510 L68 548 Q66 572 74 586 L86 596 Q98 600 108 592 L116 576 L118 540 L118 490 L100 474 Z" fill="white"/>
+
+            <ellipse cx="88" cy="608" rx="22" ry="14" fill="white"/>
+
+            <path d="M190 320 L202 325 Q218 332 224 360 L230 400 Q234 430 226 455 L214 475 Q202 482 192 476 L180 460 L172 420 L168 372 L175 322 Z" fill="white"/>
+
+            <path d="M222 472 Q234 485 238 510 L242 548 Q244 572 236 586 L224 596 Q212 600 202 592 L194 576 L192 540 L192 490 L210 474 Z" fill="white"/>
+
+            <ellipse cx="222" cy="608" rx="22" ry="14" fill="white"/>
+
+            <g fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.2" stroke-linecap="round">
+
+              <path d="M155 92 Q130 105 115 118"/><path d="M155 92 Q180 105 195 118"/><path d="M120 118 Q155 135 190 118"/>
+
+              <line x1="155" y1="112" x2="155" y2="272"/>
+
+              <path d="M105 140 Q90 170 88 210"/><path d="M205 140 Q220 170 222 210"/><path d="M105 165 Q88 195 86 230"/><path d="M205 165 Q222 195 224 230"/>
+
+              <path d="M125 140 Q155 150 185 140"/><path d="M120 158 Q155 170 190 158"/>
+
+              <path d="M120 320 Q155 335 190 320"/><path d="M115 338 Q155 355 195 338"/>
+
+              <path d="M112 360 Q108 400 106 440"/><path d="M128 358 Q126 398 124 438"/><path d="M198 360 Q202 400 204 440"/><path d="M182 358 Q184 398 186 438"/>
+
+              <path d="M100 488 Q96 520 94 555"/><path d="M116 490 Q115 522 114 556"/><path d="M200 488 Q204 520 206 555"/><path d="M184 490 Q185 522 186 556"/>
+
+              <path d="M80 148 Q76 175 74 205"/><path d="M230 148 Q234 175 236 205"/>
+
+            </g>
+
+          </g>
+
+        </svg>
+
+      </div>
+
+      <div class="zone-dot" style="left:22%;top:18%" onclick="goExplore('shoulder')"><div style="width:28px;height:1px;background:rgba(255,255,255,0.15);position:absolute;top:5px;left:10px"></div><div class="zone-dot-ring"></div><span class="zone-lbl">Shoulder</span></div>
+
+      <div class="zone-dot" style="left:25%;top:28%" onclick="goExplore('chest')"><div style="width:32px;height:1px;background:rgba(255,255,255,0.15);position:absolute;top:5px;left:10px"></div><div class="zone-dot-ring"></div><span class="zone-lbl">Chest</span></div>
+
+      <div class="zone-dot" style="left:25%;top:42%" onclick="goExplore('core')"><div style="width:32px;height:1px;background:rgba(255,255,255,0.15);position:absolute;top:5px;left:10px"></div><div class="zone-dot-ring"></div><span class="zone-lbl">Core</span></div>
+
+      <div class="zone-dot" style="left:23%;top:57%" onclick="goExplore('hip')"><div style="width:30px;height:1px;background:rgba(255,255,255,0.15);position:absolute;top:5px;left:10px"></div><div class="zone-dot-ring"></div><span class="zone-lbl">Hip</span></div>
+
+      <div class="zone-dot" style="left:22%;top:71%" onclick="goExplore('knee')"><div style="width:30px;height:1px;background:rgba(255,255,255,0.15);position:absolute;top:5px;left:10px"></div><div class="zone-dot-ring"></div><span class="zone-lbl">Knee</span></div>
+
+      <div class="zone-dot" style="left:22%;top:84%" onclick="goExplore('ankle')"><div style="width:30px;height:1px;background:rgba(255,255,255,0.15);position:absolute;top:5px;left:10px"></div><div class="zone-dot-ring"></div><span class="zone-lbl">Ankle</span></div>
+
+      <div class="zone-dot" style="left:62%;top:20%" onclick="goExplore('back')"><div style="width:28px;height:1px;background:rgba(255,255,255,0.15);position:absolute;top:5px;left:10px"></div><div class="zone-dot-ring"></div><span class="zone-lbl">Back</span></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<!-- ═══════════ EXPLORE ═══════════ -->
+
+<div id="page-explore" class="page">
+
+  <div class="bcrumb">
+
+    <button class="back-b" onclick="showPage('home')"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M7 2L3 5.5L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Home</button>
+
+    <span class="bc-txt">Home › <span id="bc">Explore</span></span>
+
+  </div>
+
+  <div class="exp-layout">
+
+    <div class="sidebar" id="sb"></div>
+
+    <div class="main-p" id="mp"><div class="empty"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#28282f" stroke-width="1.5"/><path d="M20 12v10M20 24v3" stroke="#28282f" stroke-width="2" stroke-linecap="round"/></svg><p>Select a muscle group to view exercises</p></div></div>
+
+  </div>
+
+</div>
+
+
+
+
+<!-- ═══════════ TRACKER ═══════════ -->
+
+<div id="page-tracker" class="page">
+
+  <div class="tracker-wrap">
+
+    <div style="margin-bottom:24px">
+
+      <div style="font-size:28px;font-weight:800;letter-spacing:-.6px;margin-bottom:4px">Injury tracker</div>
+
+      <div style="font-size:14px;color:var(--text3)">Log daily check-ins, monitor pain trends, and track recovery milestones</div>
+
+    </div>
+
+    <div class="tracker-hero">
+
+      <div class="t-stat"><div class="t-stat-n" style="color:var(--amber2)" id="days-counter">24</div><div class="t-stat-l">Days since injury</div><div class="t-stat-trend trend-warn"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2v6M2 5l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Sub-acute phase</div></div>
+
+      <div class="t-stat"><div class="t-stat-n" style="color:var(--coral2)">4.2</div><div class="t-stat-l">Avg pain score (7 days)</div><div class="t-stat-trend trend-good"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 7l3-4 3 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Down from 6.5</div></div>
+
+      <div class="t-stat"><div class="t-stat-n" style="color:var(--teal2)">78°</div><div class="t-stat-l">Range of motion</div><div class="t-stat-trend trend-good"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 7l3-4 3 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>+12° this week</div></div>
+
+      <div class="t-stat"><div class="t-stat-n" style="color:var(--teal2)">6</div><div class="t-stat-l">Session streak</div><div class="t-stat-trend trend-good"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 7l3-4 3 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Personal best</div></div>
+
+    </div>
+
+    <div class="two-col">
+
+      <div>
+
+        <div class="t-card" style="margin-bottom:14px">
+
+          <div class="section-title-t">Log today's check-in</div>
+
+          <div class="log-form">
+
+            <div class="log-row"><span class="log-label">Pain level</span><input type="range" min="0" max="10" step="1" value="4" class="pain-slider" oninput="document.getElementById('pain-out').textContent=this.value"><span class="pain-val" id="pain-out">4</span></div>
+
+            <div class="log-row"><span class="log-label">Range of motion (°)</span><input type="range" min="0" max="135" step="5" value="78" class="pain-slider" oninput="document.getElementById('rom-out').textContent=this.value+'°'"><span class="pain-val" id="rom-out">78°</span></div>
+
+            <div class="log-row"><span class="log-label">Swelling</span><input type="range" min="0" max="4" step="1" value="1" class="pain-slider" oninput="updateSwelling(this.value)"><span class="pain-val" id="swell-out" style="font-size:11px;min-width:44px">Mild</span></div>
+
+            <div class="log-row"><span class="log-label">Session completed?</span><select style="flex:2;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:6px 10px;border-radius:8px;font-size:13px"><option>Yes — full session</option><option>Yes — partial</option><option>Rest day</option><option>Skipped</option></select></div>
+
+            <button class="log-btn" onclick="logEntry()">Save today's log</button>
+
+          </div>
+
+        </div>
+
+        <div class="t-card">
+
+          <div class="section-title-t">Activity streak</div>
+
+          <div class="streak-grid" id="streak-grid"></div>
+
+          <div style="display:flex;gap:14px;margin-top:12px">
+
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:3px;background:rgba(29,158,117,0.5)"></div>Session done</div>
+
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:3px;background:var(--teal)"></div>Today</div>
+
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:3px;background:rgba(239,159,39,0.2)"></div>Rest day</div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div>
+
+        <div class="t-card" style="margin-bottom:14px">
+
+          <div class="section-title-t">Pain & ROM trend (14 days)</div>
+
+          <div style="display:flex;gap:14px;margin-bottom:10px">
+
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:12px;height:3px;background:var(--coral2);border-radius:2px"></div>Pain (0–10)</div>
+
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:12px;height:3px;background:var(--teal2);border-radius:2px"></div>ROM (°)</div>
+
+          </div>
+
+          <div class="timeline-rows" id="pain-timeline"></div>
+
+        </div>
+
+        <div class="t-card">
+
+          <div class="section-title-t">Recovery milestones</div>
+
+          <div class="milestones" id="milestones"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<!-- ═══════════ PT PORTAL ═══════════ -->
+
+<div id="page-pt" class="page">
+
+  <div class="pt-wrap">
+
+    <div style="margin-bottom:24px">
+
+      <div style="font-size:28px;font-weight:800;letter-spacing:-.6px;margin-bottom:4px">PT / OT portal</div>
+
+      <div style="font-size:14px;color:var(--text3)">Clinician dashboard — assign plans, monitor patients, export progress</div>
+
+    </div>
+
+    <div class="pt-hero-block">
+
+      <div class="pt-badge-block"><div class="pt-badge-n">B2B</div><div class="pt-badge-l">Clinic portal</div></div>
+
+      <div class="pt-hero-txt">
+
+        <h2>The PT/OT professional dashboard</h2>
+
+        <p>Licensed clinicians assign custom recovery plans, monitor patient compliance in real time, view pain and ROM logs between appointments, and export progress reports — all from one dashboard.</p>
+
+      </div>
+
+      <button class="pt-btn">Request demo</button>
+
+    </div>
+
+    <div style="font-size:16px;font-weight:700;margin-bottom:14px">Active patient roster</div>
+
+    <div class="patients-grid" id="patients-grid"></div>
+
+    <div style="font-size:16px;font-weight:700;margin-bottom:14px">Pricing tiers</div>
+
+    <div class="pricing-grid">
+
+      <div class="price-card">
+
+        <div class="price-label">Consumer</div><div class="price-amount">Free</div><div class="price-period">Always free</div>
+
+        <div class="price-desc">For individual athletes managing their own recovery.</div>
+
+        <ul class="price-features">
+
+          <li><div class="pf-check pf-yes"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Muscle group explorer</li>
+
+          <li><div class="pf-check pf-yes"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Basic injury tracker</li>
+
+          <li><div class="pf-check pf-yes"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>3 recovery phases</li>
+
+          <li><div class="pf-check pf-no"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1.5 1.5l5 3M6.5 1.5l-5 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>PT-assigned plans</li>
+
+          <li><div class="pf-check pf-no"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1.5 1.5l5 3M6.5 1.5l-5 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>Progress exports</li>
+
+        </ul>
+
+        <button class="price-cta">Get started</button>
+
+      </div>
+
+      <div class="price-card featured">
+
+        <div class="featured-badge">Most popular</div>
+
+        <div class="price-label">Clinic — Solo</div><div class="price-amount" style="color:var(--blue2)">$149</div><div class="price-period">per month, up to 25 patients</div>
+
+        <div class="price-desc">For individual PTs and OTs managing a personal caseload.</div>
+
+        <ul class="price-features">
+
+          <li><div class="pf-check pf-yes" style="background:rgba(55,138,221,.15);color:var(--blue2)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Everything in Free</li>
+
+          <li><div class="pf-check pf-yes" style="background:rgba(55,138,221,.15);color:var(--blue2)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Patient roster dashboard</li>
+
+          <li><div class="pf-check pf-yes" style="background:rgba(55,138,221,.15);color:var(--blue2)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Custom plan builder</li>
+
+          <li><div class="pf-check pf-yes" style="background:rgba(55,138,221,.15);color:var(--blue2)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Real-time pain & ROM logs</li>
+
+          <li><div class="pf-check pf-yes" style="background:rgba(55,138,221,.15);color:var(--blue2)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>PDF progress reports</li>
+
+        </ul>
+
+        <button class="price-cta primary">Start free trial</button>
+
+      </div>
+
+      <div class="price-card">
+
+        <div class="price-label">Clinic — Practice</div><div class="price-amount" style="color:var(--purple)">$349</div><div class="price-period">per month, unlimited patients</div>
+
+        <div class="price-desc">For multi-therapist clinics and sports medicine practices.</div>
+
+        <ul class="price-features">
+
+          <li><div class="pf-check pf-yes" style="background:rgba(127,119,221,.15);color:var(--purple)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Everything in Solo</li>
+
+          <li><div class="pf-check pf-yes" style="background:rgba(127,119,221,.15);color:var(--purple)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Multi-therapist accounts</li>
+
+          <li><div class="pf-check pf-yes" style="background:rgba(127,119,221,.15);color:var(--purple)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>White-label patient app</li>
+
+          <li><div class="pf-check pf-yes" style="background:rgba(127,119,221,.15);color:var(--purple)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>EHR integration (HL7)</li>
+
+          <li><div class="pf-check pf-yes" style="background:rgba(127,119,221,.15);color:var(--purple)"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>Outcome analytics</li>
+
+        </ul>
+
+        <button class="price-cta">Contact sales</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ═══════════ SETTINGS ═══════════ -->
+
+<div id="page-settings" class="page">
+
+  <div class="settings-wrap">
+
+    <div style="margin-bottom:24px">
+      <div style="font-size:28px;font-weight:800;letter-spacing:-.6px;margin-bottom:4px">Settings</div>
+      <div style="font-size:14px;color:var(--text3)">Analytics, acquisition funnel, and channel strategy</div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="settings-section-title">Analytics</div>
+    <div class="settings-card" style="margin-bottom:24px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div style="width:28px;height:28px;border-radius:8px;background:rgba(29,158,117,0.12);display:flex;align-items:center;justify-content:center">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="var(--teal2)" stroke-width="1.2"/><path d="M4 9l2-3 2 2 2-4" stroke="var(--teal2)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span style="font-size:14px;font-weight:700">Mixpanel</span>
+        <span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;background:rgba(29,158,117,.14);color:var(--teal2)">Connected</span>
+      </div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">Tracking page views, muscle group selections, exercise opens, and check-in logs in real time.</div>
+      <div class="mp-token-row">
+        <span style="font-size:12px;color:var(--text3)">Project token</span>
+        <span class="mp-token">10ba7808c33c481ed4b044c28d52431b</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px">
+        <div style="background:var(--bg3);border-radius:var(--r);padding:10px 12px;border:1px solid var(--border)"><div style="font-size:11px;color:var(--text3);margin-bottom:3px">Page View</div><div style="font-size:12px;color:var(--teal2);font-weight:600">Active</div></div>
+        <div style="background:var(--bg3);border-radius:var(--r);padding:10px 12px;border:1px solid var(--border)"><div style="font-size:11px;color:var(--text3);margin-bottom:3px">Muscle Group Selected</div><div style="font-size:12px;color:var(--teal2);font-weight:600">Active</div></div>
+        <div style="background:var(--bg3);border-radius:var(--r);padding:10px 12px;border:1px solid var(--border)"><div style="font-size:11px;color:var(--text3);margin-bottom:3px">Exercise Opened</div><div style="font-size:12px;color:var(--teal2);font-weight:600">Active</div></div>
+        <div style="background:var(--bg3);border-radius:var(--r);padding:10px 12px;border:1px solid var(--border)"><div style="font-size:11px;color:var(--text3);margin-bottom:3px">Check-in Logged</div><div style="font-size:12px;color:var(--teal2);font-weight:600">Active</div></div>
+      </div>
+    </div>
+
+    <!-- Acquisition funnel -->
+    <div class="settings-section-title">Acquisition funnel</div>
+    <div class="settings-two-col">
+      <div class="settings-card">
+        <div style="font-size:13px;color:var(--text3);margin-bottom:12px">Live funnel metrics</div>
+        <div class="funnel-block" id="funnel-block"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="settings-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div class="gc-icon" style="background:rgba(29,158,117,0.1);margin-bottom:0"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.5 4.5H15l-3.8 2.8 1.5 4.5L9 11l-3.7 2.8 1.5-4.5L3 6.5h4.5z" stroke="var(--teal2)" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+            <div class="gc-title" style="margin-bottom:0">Content SEO strategy</div>
+          </div>
+          <div class="gc-body">Target injury-specific long-tail keywords. "ACL recovery exercises week 3" gets 12k searches/mo. Build a content hub around each injury type.</div>
+          <div class="gc-tags"><span class="gc-tag">Organic</span><span class="gc-tag">Low cost</span><span class="gc-tag">Long-term</span></div>
+        </div>
+        <div class="settings-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div class="gc-icon" style="background:rgba(55,138,221,0.1);margin-bottom:0"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="var(--blue2)" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="var(--blue2)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+            <div class="gc-title" style="margin-bottom:0">Athletic trainer partnerships</div>
+          </div>
+          <div class="gc-body">Approach certified ATCs at colleges and pro sports teams. One ATC prescribing your app to a roster is 50 high-intent users in a single deal.</div>
+          <div class="gc-tags"><span class="gc-tag">B2B</span><span class="gc-tag">High LTV</span><span class="gc-tag">Fast growth</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Channel strategy -->
+    <div class="settings-section-title">Channel strategy</div>
+    <div class="settings-four-col">
+      <div class="settings-card">
+        <div class="gc-icon" style="background:rgba(239,159,39,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 14l4-8 4 8M6 11h4" stroke="var(--amber2)" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+        <div class="gc-title">Short-form video</div>
+        <div class="gc-body">Post 30-second exercise demos on TikTok and Reels. Injured athletes actively search this content.</div>
+        <div class="gc-tags"><span class="gc-tag">TikTok</span><span class="gc-tag">Instagram</span></div>
+      </div>
+      <div class="settings-card">
+        <div class="gc-icon" style="background:rgba(93,202,165,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M3 5h8M3 13h10" stroke="var(--teal2)" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+        <div class="gc-title">Streak sharing</div>
+        <div class="gc-body">Let users share recovery milestone cards. "Day 30 — ACL recovery" posts drive authentic installs.</div>
+        <div class="gc-tags"><span class="gc-tag">Viral loop</span><span class="gc-tag">Zero cost</span></div>
+      </div>
+      <div class="settings-card">
+        <div class="gc-icon" style="background:rgba(127,119,221,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="3" stroke="var(--purple)" stroke-width="1.2"/><path d="M7 9l2 2 4-4" stroke="var(--purple)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <div class="gc-title">Insurance partnerships</div>
+        <div class="gc-body">Many insurers will cover a clinically-backed recovery app if outcomes data shows reduced re-injury rates.</div>
+        <div class="gc-tags"><span class="gc-tag">Enterprise</span><span class="gc-tag">High revenue</span></div>
+      </div>
+      <div class="settings-card">
+        <div class="gc-icon" style="background:rgba(216,90,48,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3" stroke="var(--coral2)" stroke-width="1.2"/><path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="var(--coral2)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <div class="gc-title">Team licensing</div>
+        <div class="gc-body">License to college athletic departments and semi-pro teams. Annual contracts $5k–25k per institution.</div>
+        <div class="gc-tags"><span class="gc-tag">NCAA</span><span class="gc-tag">Annual contract</span></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<!-- ═══════════ VIDEO MODAL ═══════════ -->
+
+<div class="overlay" id="ov" onclick="closeM(event)">
+
+  <div class="modal" id="modal">
+
+    <div class="modal-top"><span class="modal-ttl" id="mttl">Exercise</span><button class="modal-x" onclick="closeM()">✕</button></div>
+
+    <div class="modal-vid-wrap" id="mvw">
+
+      <div class="modal-no-vid"><div class="mno-circle"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><polygon points="10,7 22,14 10,21" fill="#58586a"/></svg></div><div class="mno-path" id="mno-path">videos/exercise.mp4</div><div class="mno-hint">Place your .mp4 at this path or upload below.</div><div class="mno-upload"><label><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v7M3.5 4l3-3 3 3M2 10h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload video clip<input type="file" accept="video/*" onchange="handleModalUpload(event)"></label></div></div>
+
+    </div>
+
+    <div class="vid-controls" id="vctrl" style="display:none">
+
+      <button class="ctrl-btn" onclick="togglePlay()"><svg id="play-ic" width="16" height="16" viewBox="0 0 16 16" fill="none"><polygon points="4,2 14,8 4,14" fill="currentColor"/></svg><svg id="pause-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" style="display:none"><rect x="3" y="2" width="4" height="12" rx="1" fill="currentColor"/><rect x="9" y="2" width="4" height="12" rx="1" fill="currentColor"/></svg></button>
+
+      <div class="prog-bar" id="pbar" onclick="seekV(event)"><div class="prog-fill" id="pfill"></div></div>
+
+      <span class="time-d" id="tdisp">0:00</span>
+
+      <button class="ctrl-btn" onclick="toggleMute()"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6H1v4h2l4 3V3L3 6z" fill="currentColor"/><path id="vol-path" d="M11 5.5a3.5 3.5 0 010 5M13 3.5a6 6 0 010 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>
+
+    </div>
+
+    <div class="modal-bd">
+
+      <div class="meta-g" id="mmeta"></div>
+
+      <div class="steps-lbl">Movement cues</div>
+
+      <div class="steps" id="msteps"></div>
+
+      <div class="assign-note"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v7M3.5 4l3-3 3 3M2 10h9" stroke="#58586a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Expected: <code id="anote-path">videos/exercise.mp4</code> — or upload above.</span></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<script>
+
+/* ════════════════════════════════
+
+   EXERCISE DATA
+
+════════════════════════════════ */
+
+const D={
+
+  shoulder:{color:"#378ADD",label:"Upper body",title:"Shoulder",desc:"Rotator cuff, deltoids, and stabilizer muscles. Commonly injured in overhead sports, swimming, and throwing.",subs:[{key:"rc",name:"Rotator cuff",color:"#378ADD",exercises:[
+
+    {id:"pendulum",n:"Pendulum swings",sets:"3 × 30 sec",type:"r",phase:1,duration:"0:32",meta:{Sets:"3 sets",Duration:"30 sec",Phase:"Acute — Phase 1"},steps:["Stand beside a table, rest non-injured hand on surface","Let the injured arm hang freely — completely relaxed","Rotate your body gently to create a small pendulum swing","Increase circle size gradually using body momentum only","Reverse direction after each set — no active muscle force"]},
+
+    {id:"bext",n:"Band external rotation",sets:"3 × 15 reps",type:"b",phase:2,duration:"1:04",meta:{Sets:"3 sets",Reps:"15 reps",Phase:"Sub-acute — Phase 2"},steps:["Anchor resistance band at elbow height","Keep elbow bent 90°, tucked firmly at your side","Rotate forearm outward against the band","Pause at full external rotation for 1 second","Return slowly — 3 seconds back to start"]},
+
+    {id:"ytw",n:"Y-T-W raises",sets:"2 × 10 reps",type:"p",phase:3,duration:"1:20",meta:{Sets:"2 sets",Reps:"10 reps each",Phase:"Return to sport — Phase 3"},steps:["Lie face-down on a bench, arms hanging","Y: raise arms diagonally forward, thumbs up","T: raise arms straight out to the sides","W: elbows at 90°, squeeze shoulder blades together","Hold each 2 seconds — lower slowly"]},
+
+    {id:"wallsl",n:"Wall slides",sets:"3 × 12 reps",type:"b",phase:2,duration:"0:58",meta:{Sets:"3 sets",Reps:"12 reps",Phase:"Sub-acute — Phase 2"},steps:["Stand back flat against a wall, feet slightly forward","Press forearms and wrists flat against the wall","Slide arms upward maintaining full wall contact","Raise until elbows are fully extended overhead","Slide back down — maintain contact throughout"]},
+
+    {id:"retract",n:"Scapular retraction",sets:"3 × 20 reps",type:"p",phase:3,duration:"0:50",meta:{Sets:"3 sets",Reps:"20 reps",Phase:"Return to sport — Phase 3"},steps:["Stand or sit tall, arms relaxed at sides","Draw shoulder blades together and slightly downward","Squeeze a pencil between your shoulder blades","Hold 2 full seconds at maximum contraction","Release slowly and completely before next rep"]}
+
+  ]}]},
+
+  back:{color:"#AFA9EC",label:"Upper & lower body",title:"Back",desc:"From upper trapezius to lumbar erectors. Lower back strains and disc issues are among the most common athletic injuries.",subs:[{key:"lb",name:"Lower back",color:"#AFA9EC",exercises:[
+
+    {id:"catcow",n:"Cat-cow stretch",sets:"3 × 10 reps",type:"b",phase:1,duration:"1:00",meta:{Sets:"3 sets",Reps:"10 reps",Phase:"Acute — Phase 1"},steps:["Start on hands and knees, wrists under shoulders","Cow: inhale, drop belly, lift head and tailbone","Cat: exhale, round spine up, tuck chin and pelvis","Move as a continuous fluid wave through the spine","4–5 seconds in each position before transitioning"]},
+
+    {id:"birddog",n:"Bird-dog",sets:"3 × 10 each",type:"b",phase:2,duration:"1:15",meta:{Sets:"3 sets",Reps:"10 each side",Phase:"Sub-acute — Phase 2"},steps:["Start on hands and knees, spine neutral","Brace core before each rep","Simultaneously extend right arm and left leg","Keep hips completely level — no rotation","Hold 3 seconds, lower with control, alternate sides"]},
+
+    {id:"gbridge",n:"Glute bridge",sets:"3 × 15 reps",type:"b",phase:2,duration:"1:05",meta:{Sets:"3 sets",Reps:"15 reps",Phase:"Sub-acute — Phase 2"},steps:["Lie on back, knees bent 90°, feet flat","Press lower back into the floor before lifting","Drive through heels and squeeze glutes to raise hips","Straight line from knees to shoulders at the top","Hold 2 seconds — lower over 3 seconds"]}
+
+  ]}]},
+
+  core:{color:"#1D9E75",label:"Trunk",title:"Core",desc:"Transverse abdominis, obliques, and deep stabilizers. Core weakness is a root cause of many peripheral injuries.",subs:[{key:"dc",name:"Deep core",color:"#1D9E75",exercises:[
+
+    {id:"deadbug",n:"Dead bug",sets:"3 × 8 reps",type:"b",phase:2,duration:"1:10",meta:{Sets:"3 sets",Reps:"8 reps each",Phase:"Sub-acute — Phase 2"},steps:["Lie on back, arms up, knees at 90°","Press lower back firmly into the floor","Lower opposite arm and leg toward the floor","Stop before your lower back lifts off","Return to start, alternate sides with control"]},
+
+    {id:"plank",n:"Plank hold",sets:"3 × 30 sec",type:"b",phase:2,duration:"0:55",meta:{Sets:"3 sets",Duration:"30 sec",Phase:"Sub-acute — Phase 2"},steps:["Forearms and toes, elbows under shoulders","Straight line from head through heels","Squeeze glutes and quads, brace the core","Neck neutral — eyes just ahead on the floor","Breathe normally — progress duration weekly"]},
+
+    {id:"pallof",n:"Pallof press",sets:"3 × 12 each",type:"b",phase:2,duration:"1:10",meta:{Sets:"3 sets",Reps:"12 each side",Phase:"Sub-acute — Phase 2"},steps:["Anchor band at chest height beside you","Stand perpendicular, feet shoulder-width","Hold band at chest, elbows tucked","Press both hands straight out — resist rotation","Hold 2 seconds, return with control"]}
+
+  ]}]},
+
+  knee:{color:"#EF9F27",label:"Lower body",title:"Knee",desc:"Patella, ACL/PCL/MCL ligaments, patellar tendon, and quad/hamstring musculature. Critical for nearly all athletic movement.",subs:[{key:"qu",name:"Quadriceps & tendons",color:"#EF9F27",exercises:[
+
+    {id:"slr",n:"Straight leg raise",sets:"3 × 15 reps",type:"r",phase:1,duration:"1:00",meta:{Sets:"3 sets",Reps:"15 reps",Phase:"Acute — Phase 1"},steps:["Lie flat, one knee bent, one leg straight","Tighten the quad of the straight leg fully","Raise to the height of the bent knee","Pause 2 seconds at the top","Lower slowly — quad stays contracted throughout"]},
+
+    {id:"tke",n:"Terminal knee extension",sets:"3 × 20 reps",type:"b",phase:2,duration:"1:05",meta:{Sets:"3 sets",Reps:"20 reps",Phase:"Sub-acute — Phase 2"},steps:["Band looped behind knee, anchored low in front","Stand with slight knee bend — band taut","Straighten knee fully against the band","Pause at full extension — VMO fires","Slowly re-bend to starting position"]},
+
+    {id:"stepdown",n:"Eccentric step-down",sets:"3 × 10 slow",type:"b",phase:2,duration:"1:20",meta:{Sets:"3 sets",Reps:"10 slow reps",Phase:"Sub-acute — Phase 2"},steps:["Stand on step with injured leg, other foot free","Arms out for light balance only","Lower the free foot over 3–4 full seconds","Touch down lightly — do not transfer weight","Drive back up through the standing leg"]}
+
+  ]}]},
+
+  ankle:{color:"#D85A30",label:"Lower body",title:"Ankle",desc:"Ankle ligaments, Achilles tendon, and calf complex. Sprains and tendinopathy are extremely common across all sports.",subs:[{key:"ach",name:"Achilles & calf",color:"#D85A30",exercises:[
+
+    {id:"alpha",n:"Alphabet tracing",sets:"2 × full alphabet",type:"r",phase:1,duration:"1:30",meta:{Sets:"2 sets",Reps:"Full A–Z",Phase:"Acute — Phase 1"},steps:["Sit with injured foot elevated","Ankle and foot only — no knee or hip","Trace each capital letter A through Z clearly","Move through the full range each letter allows","2 complete passes — 60 sec rest between sets"]},
+
+    {id:"heeldrop",n:"Eccentric heel drops",sets:"3 × 15 reps",type:"b",phase:2,duration:"1:10",meta:{Sets:"3 sets",Reps:"15 reps",Phase:"Sub-acute — Phase 2"},steps:["Both feet on the edge of a step, balls of feet","Rise up on both feet to the top","Shift all weight to the injured leg","Lower heel below step over 3–4 seconds","Rise on both feet — repeat"]},
+
+    {id:"singlebal",n:"Single-leg balance",sets:"3 × 30 sec",type:"b",phase:2,duration:"1:00",meta:{Sets:"3 sets",Duration:"30 sec",Phase:"Sub-acute — Phase 2"},steps:["Stand on injured foot on a firm surface","Fix gaze on a stationary point at eye level","Soft bend in the standing knee","Let ankle micro-adjust — that is the goal","Progress: close eyes, then use a foam pad"]}
+
+  ]}]},
+
+  hip:{color:"#D85A30",label:"Lower body",title:"Hip & glutes",desc:"Hip flexors, glutes, IT band, and rotators. Often the root cause of knee and lower back dysfunction.",subs:[{key:"gl",name:"Glutes & hip flexors",color:"#D85A30",exercises:[
+
+    {id:"clamsh",n:"Side-lying clamshells",sets:"3 × 20 reps",type:"b",phase:2,duration:"1:05",meta:{Sets:"3 sets",Reps:"20 reps",Phase:"Sub-acute — Phase 2"},steps:["Lie on side, hips stacked directly on each other","Hips and knees both at 90°","Keep feet stacked and together throughout","Rotate top knee upward like a clamshell","Lower fully — do not let hip roll backward"]},
+
+    {id:"hydrant",n:"Fire hydrant",sets:"3 × 15 reps",type:"b",phase:2,duration:"0:58",meta:{Sets:"3 sets",Reps:"15 reps",Phase:"Sub-acute — Phase 2"},steps:["Hands and knees, wrists under shoulders","Brace core — spine stays neutral","Knee bent 90°, lift out to the side","Thigh parallel to floor at top","Lower with full control, reset"]},
+
+    {id:"hip9090",n:"90/90 hip stretch",sets:"3 × 45 sec",type:"b",phase:1,duration:"1:30",meta:{Sets:"3 sets",Duration:"45 sec each",Phase:"Acute — Phase 1"},steps:["Sit on floor, front shin parallel to mat edge","Back leg at 90° to the side behind","Sit tall — no rounding","Press both sit bones toward the floor","Breathe deeply — switch sides, 3 rounds"]}
+
+  ]}]},
+
+  chest:{color:"#7F77DD",label:"Upper body",title:"Chest",desc:"Pectoralis major and minor. Pec strains are common in contact sports and heavy pressing movements.",subs:[{key:"pc",name:"Pectoralis",color:"#7F77DD",exercises:[
+
+    {id:"bfly",n:"Resistance band fly",sets:"3 × 15 reps",type:"r",phase:2,duration:"1:05",meta:{Sets:"3 sets",Reps:"15 reps (light)",Phase:"Sub-acute — Phase 2"},steps:["Anchor band behind you at chest height","Hold one end in each hand, arms slightly forward","Bring hands together in a hugging arc","Squeeze pecs at midpoint — pause 1 second","Return slowly — 3 seconds, full stretch at end"]},
+
+    {id:"modpush",n:"Modified push-up",sets:"3 × 10 reps",type:"b",phase:2,duration:"0:55",meta:{Sets:"3 sets",Reps:"10 reps",Phase:"Sub-acute — Phase 2"},steps:["On knees, hands slightly wider than shoulders","Body straight from knees to head","Lower chest toward floor under control","Stop before pec strain or pull","Push back up — core engaged throughout"]}
+
+  ]}]}
+
+};
+
+
+
+
+const PHASEL={1:"Phase 1 — Acute",2:"Phase 2 — Sub-acute",3:"Phase 3 — Return to sport"};
+
+const TYPEL={p:"Prevention",r:"Recovery",b:"Prevention & recovery"};
+
+const TYPEP={p:"pp",r:"pr",b:"pb"};
+
+const TYPEB={p:"tb-p",r:"tb-r",b:"tb-b"};
+
+const videoBlobs={};
+
+const videoPaths={
+  pendulum:'armflex.mov',bext:'armflex.mov',ytw:'armflex.mov',
+  wallsl:'armflex.mov',doorway:'armflex.mov',retract:'armflex.mov',
+  catcow:'childspose.mov',birddog:'childspose.mov',gbridge:'childspose.mov',
+  slr:'jumpingjacks.mov',tke:'jumpingjacks.mov',stepdown:'jumpingjacks.mov',
+  clamsh:'hipflexor.mp4',hip9090:'hipflexor.mp4',
+  hydrant:'glute.mov',
+};
+
+let aG=null,aSub=null,aF="all",modalVidEl=null,curExId=null;
+
+
+
+
+/* ─── PAGE NAV ─── */
+
+function showPage(p){
+
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+
+  document.querySelectorAll('.nav-lnk').forEach(el=>el.classList.remove('on'));
+
+  document.getElementById('page-'+p).classList.add('active');
+
+  const nl=document.getElementById('nl-'+p);
+
+  if(nl)nl.classList.add('on');
+
+  window.scrollTo(0,0);
+
+  if(p==='explore')buildSB();
+
+  if(typeof mixpanel!=='undefined')mixpanel.track('Page View',{page:p});
+
+}
+
+
+
+
+function goExplore(key){
+
+  showPage('explore');
+
+  buildSB();
+
+  selGroup(key);
+
+}
+
+
+
+
+/* ─── EXPLORE ─── */
+
+function buildSB(){
+
+  const sb=document.getElementById("sb");
+
+  if(sb.innerHTML!=='')return;
+
+  sb.innerHTML='<div class="sb-hdr">Muscle groups</div>';
+
+  Object.entries(D).forEach(([k,g])=>{
+
+    const div=document.createElement("div");
+
+    div.innerHTML=`<button class="sg-btn" id="sg-${k}" onclick="selGroup('${k}')"><span class="sg-dw"><span class="sg-d" style="background:${g.color}"></span>${g.title}</span><i class="chv" id="cv-${k}">›</i></button><div class="subs" id="subs-${k}">${g.subs.map(s=>`<button class="sub-b" id="ss-${s.key}" onclick="selSub('${k}','${s.key}')"><span class="sub-tk" style="background:${s.color}"></span>${s.name}</button>`).join("")}</div>`;
+
+    sb.appendChild(div);
+
+  });
+
+}
+
+
+
+
+function selGroup(k){
+
+  aG=k;aSub=null;aF="all";
+
+  document.querySelectorAll(".sg-btn").forEach(b=>b.classList.remove("on"));
+
+  document.querySelectorAll(".subs").forEach(s=>s.classList.remove("o"));
+
+  document.querySelectorAll(".chv").forEach(c=>c.classList.remove("o"));
+
+  document.querySelectorAll(".sub-b").forEach(b=>b.classList.remove("on"));
+
+  document.getElementById("sg-"+k)?.classList.add("on");
+
+  document.getElementById("subs-"+k)?.classList.add("o");
+
+  document.getElementById("cv-"+k)?.classList.add("o");
+
+  document.getElementById("bc").textContent=D[k].title;
+
+  renderMain(k,null,D[k].subs.flatMap(s=>s.exercises));
+
+  if(typeof mixpanel!=='undefined')mixpanel.track('Muscle Group Selected',{group:k,title:D[k].title});
+
+}
+
+
+
+
+function selSub(gk,sk){
+
+  aG=gk;aSub=sk;aF="all";
+
+  document.querySelectorAll(".sg-btn").forEach(b=>b.classList.remove("on"));
+
+  document.querySelectorAll(".sub-b").forEach(b=>b.classList.remove("on"));
+
+  document.getElementById("sg-"+gk)?.classList.add("on");
+
+  document.getElementById("ss-"+sk)?.classList.add("on");
+
+  document.getElementById("subs-"+gk)?.classList.add("o");
+
+  document.getElementById("cv-"+gk)?.classList.add("o");
+
+  const sub2=D[gk].subs.find(s=>s.key===sk);
+
+  document.getElementById("bc").textContent=D[gk].title+" › "+sub2.name;
+
+  renderMain(gk,sk,sub2.exercises);
+
+}
+
+
+
+
+function setF(f){
+
+  aF=f;
+
+  document.querySelectorAll(".f-b").forEach(b=>b.classList.remove("on"));
+
+  document.getElementById("fb-"+f)?.classList.add("on");
+
+  const g=D[aG];
+
+  let exs=aSub?g.subs.find(s=>s.key===aSub).exercises:g.subs.flatMap(s=>s.exercises);
+
+  if(f!=="all")exs=exs.filter(e=>e.type===f);
+
+  renderCards(exs);
+
+}
+
+
+
+
+function renderMain(gk,sk,exs){
+
+  const g=D[gk],sub=sk?g.subs.find(s=>s.key===sk):null;
+
+  document.getElementById("mp").innerHTML=`<div class="d-tag" style="color:${g.color}">${g.label}</div><div class="d-h">${sub?g.title+" — "+sub.name:g.title}</div><div class="d-desc">${g.desc}</div><div class="f-row"><button class="f-b on" id="fb-all" onclick="setF('all')">All exercises</button><button class="f-b" id="fb-p" onclick="setF('p')">Prevention</button><button class="f-b" id="fb-r" onclick="setF('r')">Recovery</button><button class="f-b" id="fb-b" onclick="setF('b')">Both</button></div><div class="s-hdr" id="ec">${exs.length} exercises</div><div class="ex-grid" id="eg"></div>`;
+
+  renderCards(exs);
+
+}
+
+
+
+
+function renderCards(exs){
+
+  const grid=document.getElementById("eg"),ec=document.getElementById("ec");
+
+  if(ec)ec.textContent=`${exs.length} exercise${exs.length===1?"":"s"}`;
+
+  if(!grid)return;
+
+  grid.innerHTML=exs.map(e=>{
+
+    const vidSrc=videoBlobs[e.id]||videoPaths[e.id]||'';
+
+    const hv=!!vidSrc;
+
+    return `<div class="ex-c" id="card-${e.id}"><div class="vid-slot" onclick="openM('${e.id}','${aG}')">${hv?`<video id="cv-${e.id}" src="${vidSrc}" muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=0"></video><div class="vid-overlay hidden"></div>`:`<video id="cv-${e.id}" style="display:none" muted loop playsinline></video><div class="vid-overlay" id="ov-${e.id}"><div class="vid-poster-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,4 15,9 6,14" fill="#58586a"/></svg></div><span class="vid-poster-label">videos/${e.id}.mp4</span></div>`}<div class="play-ring"><svg width="10" height="10" viewBox="0 0 10 10" fill="white"><polygon points="2,1 9,5 2,9"/></svg></div><span class="dur-badge">${e.duration||"—"}</span><span class="type-badge ${TYPEB[e.type]}">${TYPEL[e.type]}</span><div class="upload-cta" onclick="event.stopPropagation()"><label><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v6M3 4l3-3 3 3M1 9h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload video<input type="file" accept="video/*" onchange="handleCardUpload(event,'${e.id}')"></label><span class="or-open">or click to preview</span></div></div><div class="ex-bd"><div class="ex-nm">${e.n}</div><div class="ex-st">${e.sets}</div><div class="ex-ft"><span class="pill ${TYPEP[e.type]}">${TYPEL[e.type]}</span><span class="ex-ph">${PHASEL[e.phase]}</span></div></div></div>`;
+
+  }).join("");
+
+}
+
+
+
+
+function handleCardUpload(evt,exId){
+
+  const file=evt.target.files[0];if(!file)return;
+
+  const url=URL.createObjectURL(file);videoBlobs[exId]=url;
+
+  const v=document.getElementById("cv-"+exId),o=document.getElementById("ov-"+exId);
+
+  if(v){v.src=url;v.style.display="block";v.onmouseenter=()=>v.play();v.onmouseleave=()=>{v.pause();v.currentTime=0;};}
+
+  if(o)o.classList.add("hidden");
+
+}
+
+
+
+
+function handleModalUpload(evt){
+
+  const file=evt.target.files[0];if(!file||!curExId)return;
+
+  const url=URL.createObjectURL(file);videoBlobs[curExId]=url;
+
+  injectModalVideo(url);
+
+  const cv=document.getElementById("cv-"+curExId),co=document.getElementById("ov-"+curExId);
+
+  if(cv){cv.src=url;cv.style.display="block";}if(co)co.classList.add("hidden");
+
+}
+
+
+
+
+function injectModalVideo(src){
+
+  const w=document.getElementById("mvw");
+
+  w.innerHTML=`<video id="modal-vid" src="${src}" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block" ontimeupdate="updateProg(this)"></video>`;
+
+  modalVidEl=document.getElementById("modal-vid");
+
+  document.getElementById("vctrl").style.display="flex";
+
+  document.getElementById("play-ic").style.display="none";
+
+  document.getElementById("pause-ic").style.display="block";
+
+}
+
+
+
+
+function openM(exId,gk){
+
+  const g=D[gk],ex=g.subs.flatMap(s=>s.exercises).find(e=>e.id===exId);
+
+  if(!ex)return;
+
+  curExId=exId;
+
+  document.getElementById("mttl").textContent=ex.n;
+
+  document.getElementById("mmeta").innerHTML=Object.entries(ex.meta).map(([k,v])=>`<div class="meta-i"><div class="meta-lbl">${k}</div><div class="meta-v">${v}</div></div>`).join("");
+
+  document.getElementById("msteps").innerHTML=ex.steps.map((s,i)=>`<div class="step"><span class="step-n">${i+1}</span><span>${s}</span></div>`).join("");
+
+  const path=`videos/${ex.id}.mp4`;
+
+  document.getElementById("anote-path").textContent=path;
+
+  const w=document.getElementById("mvw");
+
+  const vidSrc=videoBlobs[exId]||videoPaths[exId]||'';
+
+  if(vidSrc){
+
+    w.innerHTML=`<video id="modal-vid" src="${vidSrc}" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block" ontimeupdate="updateProg(this)"></video>`;
+
+    modalVidEl=document.getElementById("modal-vid");
+
+    document.getElementById("vctrl").style.display="flex";
+
+    document.getElementById("play-ic").style.display="none";
+
+    document.getElementById("pause-ic").style.display="block";
+
+  } else {
+
+    w.innerHTML=`<div class="modal-no-vid"><div class="mno-circle"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><polygon points="10,7 22,14 10,21" fill="#58586a"/></svg></div><div class="mno-path">${path}</div><div class="mno-hint">Place your .mp4 at this path or upload below.</div><div class="mno-upload"><label><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v7M3.5 4l3-3 3 3M2 10h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload video clip<input type="file" accept="video/*" onchange="handleModalUpload(event)"></label></div></div>`;
+
+    modalVidEl=null;document.getElementById("vctrl").style.display="none";
+
+  }
+
+  document.getElementById("ov").classList.add("o");
+
+  if(typeof mixpanel!=='undefined')mixpanel.track('Exercise Opened',{exercise:ex.n,id:exId,group:gk,phase:ex.phase,type:ex.type});
+
+}
+
+
+
+
+function updateProg(v){
+
+  if(!v.duration)return;
+
+  const fill=document.getElementById("pfill"),disp=document.getElementById("tdisp");
+
+  if(fill)fill.style.width=((v.currentTime/v.duration)*100)+"%";
+
+  if(disp){const s=Math.floor(v.currentTime);disp.textContent=Math.floor(s/60)+":"+(s%60<10?"0":"")+s%60;}
+
+  const pi=document.getElementById("play-ic"),pai=document.getElementById("pause-ic");
+
+  if(pi&&pai){pi.style.display=v.paused?"block":"none";pai.style.display=v.paused?"none":"block";}
+
+}
+
+function togglePlay(){if(!modalVidEl)return;modalVidEl.paused?modalVidEl.play():modalVidEl.pause();}
+
+function seekV(e){if(!modalVidEl||!modalVidEl.duration)return;const r=document.getElementById("pbar").getBoundingClientRect();modalVidEl.currentTime=((e.clientX-r.left)/r.width)*modalVidEl.duration;}
+
+function toggleMute(){if(!modalVidEl)return;modalVidEl.muted=!modalVidEl.muted;document.getElementById("vol-path").style.opacity=modalVidEl.muted?.2:1;}
+
+function closeM(e){if(e&&e.target!==document.getElementById("ov"))return;document.getElementById("ov").classList.remove("o");if(modalVidEl&&!modalVidEl.paused)modalVidEl.pause();}
+
+
+
+
+/* ════════════════════════════════
+
+   TRACKER
+
+════════════════════════════════ */
+
+const PAIN=[6.5,6.0,5.8,5.5,5.2,4.9,4.8,4.5,4.4,4.2,4.0,4.2,4.1,4.2];
+
+const ROM=[42,46,50,54,58,62,64,68,70,72,74,75,77,78];
+
+const DAYS=['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13','D14'];
+
+
+
+
+function buildTimeline(){
+
+  const tl=document.getElementById('pain-timeline');
+
+  if(!tl||tl.innerHTML!=='')return;
+
+  tl.innerHTML=DAYS.map((d,i)=>`<div class="tl-row"><span class="tl-day">${d}</span><div class="tl-bar-wrap"><div class="tl-bar" style="width:${(PAIN[i]/10)*100}%;background:${PAIN[i]>6?'#D85A30':PAIN[i]>4?'#EF9F27':'#1D9E75'}"></div></div><span class="tl-val" style="color:${PAIN[i]>6?'var(--coral2)':PAIN[i]>4?'var(--amber2)':'var(--teal2)'}">${PAIN[i].toFixed(1)}</span><span class="tl-rom">${ROM[i]}°</span></div>`).join('');
+
+}
+
+
+
+
+const MS_DATA=[
+
+  {name:"Pain below 7",sub:"First week target",status:"done",days:"Day 3"},
+
+  {name:"ROM above 60°",sub:"Flexion milestone",status:"done",days:"Day 8"},
+
+  {name:"Full weight bearing",sub:"No pain walking",status:"done",days:"Day 14"},
+
+  {name:"ROM above 90°",sub:"Current target",status:"current",days:"~Day 30"},
+
+  {name:"Single-leg squat",sub:"Strength phase",status:"upcoming",days:"~Day 45"},
+
+  {name:"Return to jogging",sub:"Sport re-entry",status:"upcoming",days:"~Day 60"},
+
+];
+
+
+
+
+function buildMilestones(){
+
+  const ms=document.getElementById('milestones');
+
+  if(!ms||ms.innerHTML!=='')return;
+
+  ms.innerHTML=MS_DATA.map(m=>`<div class="ms-row ${m.status}"><div class="ms-icon ${m.status}">${m.status==='done'?'<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>':m.status==='current'?'<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3" fill="currentColor"/></svg>':'<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1"/></svg>'}</div><div class="ms-info"><div class="ms-name">${m.name}</div><div class="ms-sub">${m.sub}</div></div><div class="ms-days" style="color:${m.status==='done'?'var(--teal2)':m.status==='current'?'var(--amber2)':'var(--text3)'}">${m.days}</div></div>`).join('');
+
+}
+
+
+
+
+const STREAKDATA=['done','done','rest','done','done','done','done','skip','done','done','done','rest','done','done','today','','','','','',''];
+
+function buildStreak(){
+
+  const g=document.getElementById('streak-grid');
+
+  if(!g||g.innerHTML!=='')return;
+
+  const labels=['M','T','W','T','F','S','S'];
+
+  g.innerHTML=STREAKDATA.map((s,i)=>`<div><div class="sg-day ${s==='done'?'sg-done':s==='today'?'sg-today':s==='rest'?'sg-rest':s==='skip'?'sg-skip':'sg-rest'}"></div><div class="sg-label">${labels[i%7]}</div></div>`).join('');
+
+}
+
+
+
+
+function updateSwelling(v){const labels=['None','Mild','Moderate','Significant','Severe'];document.getElementById('swell-out').textContent=labels[v]||'None';}
+
+function logEntry(){if(typeof mixpanel!=='undefined')mixpanel.track('Check-in Logged');const btn=document.querySelector('.log-btn');btn.textContent='Saved!';btn.style.background='var(--teal2)';setTimeout(()=>{btn.textContent="Save today's log";btn.style.background='var(--teal)';},2000);}
+
+
+
+
+/* ════════════════════════════════
+
+   PT PORTAL
+
+════════════════════════════════ */
+
+const PATIENTS=[
+
+  {name:"Marcus T.",initials:"MT",color:"#378ADD",injury:"ACL — Knee",days:24,pain:4.2,rom:78,compliance:92,status:"on"},
+
+  {name:"Priya N.",initials:"PN",color:"#1D9E75",injury:"Rotator cuff — Shoulder",days:45,pain:2.8,rom:155,compliance:88,status:"on"},
+
+  {name:"James K.",initials:"JK",color:"#EF9F27",injury:"Lumbar strain — Back",days:12,pain:6.1,rom:55,compliance:60,status:"warn"},
+
+  {name:"Sofia M.",initials:"SM",color:"#7F77DD",injury:"Achilles — Ankle",days:68,pain:1.9,rom:40,compliance:95,status:"on"},
+
+  {name:"Derek W.",initials:"DW",color:"#D85A30",injury:"Meniscus — Knee",days:8,pain:7.2,rom:35,compliance:40,status:"behind"},
+
+  {name:"Aisha R.",initials:"AR",color:"#5DCAA5",injury:"Hip flexor strain",days:31,pain:3.4,rom:90,compliance:78,status:"warn"},
+
+];
+
+
+
+
+function buildPatients(){
+
+  const g=document.getElementById('patients-grid');
+
+  if(!g||g.innerHTML!=='')return;
+
+  g.innerHTML=PATIENTS.map(p=>`<div class="patient-card"><div class="pc-top"><div class="pc-avatar" style="background:${p.color}22;color:${p.color}">${p.initials}</div><div><div class="pc-name">${p.name}</div><div class="pc-injury">${p.injury}</div></div></div><div class="pc-meta"><div class="pc-m-item"><div class="pc-m-n" style="color:var(--amber2)">${p.days}</div><div class="pc-m-l">Days</div></div><div class="pc-m-item"><div class="pc-m-n" style="color:${p.pain>5?'var(--coral2)':p.pain>3?'var(--amber2)':'var(--teal2)'}">${p.pain}</div><div class="pc-m-l">Pain</div></div><div class="pc-m-item"><div class="pc-m-n" style="color:var(--teal2)">${p.compliance}%</div><div class="pc-m-l">Compliance</div></div></div><div class="pc-status"><span class="status-pill sp-${p.status}">${p.status==='on'?'On track':p.status==='warn'?'Needs check-in':'Behind plan'}</span><span style="font-size:11px;color:var(--text3)">ROM: ${p.rom}°</span></div></div>`).join('');
+
+}
+
+
+
+
+/* ════════════════════════════════
+
+   GROWTH
+
+════════════════════════════════ */
+
+const FUNNEL_DATA=[
+
+  {label:"Organic visitors",n:"14,200/mo",pct:100,color:"#378ADD"},
+
+  {label:"App installs",n:"2,840/mo",pct:20,color:"#1D9E75"},
+
+  {label:"Active users (7d)",n:"1,560/mo",pct:11,color:"#5DCAA5"},
+
+  {label:"PT referrals",n:"340/mo",pct:2.4,color:"#EF9F27"},
+
+  {label:"Paid subscriptions",n:"128/mo",pct:0.9,color:"#D85A30"},
+
+];
+
+
+
+
+function buildFunnel(){
+
+  const f=document.getElementById('funnel-block');
+
+  if(!f||f.innerHTML!=='')return;
+
+  f.innerHTML=FUNNEL_DATA.map(d=>`<div class="funnel-r"><span class="funnel-lbl">${d.label}</span><div class="funnel-bw"><div class="funnel-bf" style="width:${d.pct}%;background:${d.color}"></div></div><span class="funnel-n" style="color:${d.color}">${d.n}</span></div>`).join('');
+
+}
+
+
+
+
+/* ─── INIT all lazy data when pages first shown ─── */
+
+const _origShowPage = showPage;
+
+window.showPage = function(p){
+
+  _origShowPage(p);
+
+  if(p==='tracker'){buildTimeline();buildMilestones();buildStreak();}
+
+  if(p==='pt'){buildPatients();}
+
+  if(p==='settings'){buildFunnel();}
+
+};
+
+
+
+
+buildSB();
+
+</script>
+
+</body>
+
+</html>
