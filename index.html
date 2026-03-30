@@ -543,6 +543,37 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .assign-note{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);margin-top:16px;padding:10px 14px;border:1px dashed var(--border2);border-radius:var(--r)}
 
 .assign-note code{color:var(--teal2);font-size:11px}
+/* ══════════════════════════════════════
+   SETTINGS PAGE
+══════════════════════════════════════ */
+.settings-wrap{padding:32px 40px;max-width:1100px;margin:0 auto}
+.settings-section-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;margin-top:24px}
+.settings-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:6px}
+.s-table{width:100%;border-collapse:collapse}
+.s-table thead tr{border-bottom:1px solid var(--border2)}
+.s-table th{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:10px 18px;text-align:left;white-space:nowrap}
+.s-table td{font-size:13px;color:var(--text);padding:13px 18px;border-bottom:1px solid var(--border);vertical-align:middle}
+.s-table tbody tr:last-child td{border-bottom:none}
+.s-table tbody tr:hover td{background:rgba(255,255,255,.018)}
+.s-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle}
+.s-status-on{color:var(--teal2);font-weight:600;font-size:12px}
+.s-token{font-family:monospace;font-size:11px;color:var(--teal2);background:var(--bg3);padding:4px 10px;border-radius:6px;border:1px solid var(--border)}
+.s-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--bg3);color:var(--text3);border:1px solid var(--border);margin-right:4px;display:inline-block}
+.s-pct-wrap{display:flex;align-items:center;gap:10px}
+.s-pct-bar{flex:1;height:4px;background:var(--border2);border-radius:2px;overflow:hidden;min-width:100px}
+.s-pct-fill{height:100%;border-radius:2px}
+.s-accordion{display:flex;flex-direction:column;gap:6px;margin-bottom:24px}
+.s-acc-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:border-color .2s}
+.s-acc-item.open{border-color:var(--border3)}
+.s-acc-hdr{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;user-select:none;transition:background .15s}
+.s-acc-hdr:hover{background:rgba(255,255,255,.03)}
+.s-acc-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.s-acc-title{font-size:14px;font-weight:700;color:var(--text);flex:1}
+.s-acc-tags{display:flex;gap:5px;flex-wrap:wrap}
+.s-acc-chv{font-size:13px;color:var(--text3);transition:transform .22s;margin-left:8px;flex-shrink:0}
+.s-acc-item.open .s-acc-chv{transform:rotate(90deg)}
+.s-acc-body{display:none;padding:14px 18px 16px 62px;font-size:13px;color:var(--text2);line-height:1.7;border-top:1px solid var(--border)}
+.s-acc-item.open .s-acc-body{display:block}
 
 </style>
 
@@ -1036,95 +1067,186 @@ mixpanel.init("10ba7808c33c481ed4b044c28d52431b", {track_pageview: true});
 <!-- ═══════════ SETTINGS ═══════════ -->
 
 <div id="page-settings" class="page">
-
   <div class="settings-wrap">
 
-    <div style="margin-bottom:24px">
+    <div style="margin-bottom:28px">
       <div style="font-size:28px;font-weight:800;letter-spacing:-.6px;margin-bottom:4px">Settings</div>
       <div style="font-size:14px;color:var(--text3)">Analytics, acquisition funnel, and channel strategy</div>
     </div>
 
-    <!-- Analytics -->
+    <!-- ── Analytics ── -->
     <div class="settings-section-title">Analytics</div>
-    <div class="settings-card" style="margin-bottom:24px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-        <div style="width:28px;height:28px;border-radius:8px;background:rgba(29,158,117,0.12);display:flex;align-items:center;justify-content:center">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="var(--teal2)" stroke-width="1.2"/><path d="M4 9l2-3 2 2 2-4" stroke="var(--teal2)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <span style="font-size:14px;font-weight:700">Mixpanel</span>
-        <span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;background:rgba(29,158,117,.14);color:var(--teal2)">Connected</span>
-      </div>
-      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">Tracking page views, muscle group selections, exercise opens, and check-in logs in real time.</div>
-      <div class="mp-token-row">
-        <span style="font-size:12px;color:var(--text3)">Project token</span>
-        <span class="mp-token">10ba7808c33c481ed4b044c28d52431b</span>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px">
-        <div style="background:var(--bg3);border-radius:var(--r);padding:10px 12px;border:1px solid var(--border)"><div style="font-size:11px;color:var(--text3);margin-bottom:3px">Page View</div><div style="font-size:12px;color:var(--teal2);font-weight:600">Active</div></div>
-        <div style="background:var(--bg3);border-radius:var(--r);padding:10px 12px;border:1px solid var(--border)"><div style="font-size:11px;color:var(--text3);margin-bottom:3px">Muscle Group Selected</div><div style="font-size:12px;color:var(--teal2);font-weight:600">Active</div></div>
-        <div style="background:var(--bg3);border-radius:var(--r);padding:10px 12px;border:1px solid var(--border)"><div style="font-size:11px;color:var(--text3);margin-bottom:3px">Exercise Opened</div><div style="font-size:12px;color:var(--teal2);font-weight:600">Active</div></div>
-        <div style="background:var(--bg3);border-radius:var(--r);padding:10px 12px;border:1px solid var(--border)"><div style="font-size:11px;color:var(--text3);margin-bottom:3px">Check-in Logged</div><div style="font-size:12px;color:var(--teal2);font-weight:600">Active</div></div>
-      </div>
+    <div class="settings-card">
+      <table class="s-table">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Status</th>
+            <th>Project token</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600">Mixpanel</td>
+            <td><span class="s-status-on"><span class="s-dot" style="background:var(--teal2)"></span>Connected</span></td>
+            <td><span class="s-token">10ba7808c33c481ed4b044c28d52431b</span></td>
+            <td style="color:var(--text2)">Tracking user events in real time</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- Acquisition funnel -->
+    <!-- ── Tracked events ── -->
+    <div class="settings-section-title">Tracked events</div>
+    <div class="settings-card">
+      <table class="s-table">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Trigger</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600">Page View</td>
+            <td style="color:var(--text2)">Any nav tab clicked</td>
+            <td><span class="s-status-on"><span class="s-dot" style="background:var(--teal2)"></span>Active</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600">Muscle Group Selected</td>
+            <td style="color:var(--text2)">Explore sidebar or home chip clicked</td>
+            <td><span class="s-status-on"><span class="s-dot" style="background:var(--teal2)"></span>Active</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600">Exercise Opened</td>
+            <td style="color:var(--text2)">Exercise card clicked, modal opens</td>
+            <td><span class="s-status-on"><span class="s-dot" style="background:var(--teal2)"></span>Active</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600">Check-in Logged</td>
+            <td style="color:var(--text2)">Save button on injury tracker</td>
+            <td><span class="s-status-on"><span class="s-dot" style="background:var(--teal2)"></span>Active</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Acquisition funnel ── -->
     <div class="settings-section-title">Acquisition funnel</div>
-    <div class="settings-two-col">
-      <div class="settings-card">
-        <div style="font-size:13px;color:var(--text3);margin-bottom:12px">Live funnel metrics</div>
-        <div class="funnel-block" id="funnel-block"></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <div class="settings-card">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-            <div class="gc-icon" style="background:rgba(29,158,117,0.1);margin-bottom:0"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.5 4.5H15l-3.8 2.8 1.5 4.5L9 11l-3.7 2.8 1.5-4.5L3 6.5h4.5z" stroke="var(--teal2)" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
-            <div class="gc-title" style="margin-bottom:0">Content SEO strategy</div>
-          </div>
-          <div class="gc-body">Target injury-specific long-tail keywords. "ACL recovery exercises week 3" gets 12k searches/mo. Build a content hub around each injury type.</div>
-          <div class="gc-tags"><span class="gc-tag">Organic</span><span class="gc-tag">Low cost</span><span class="gc-tag">Long-term</span></div>
-        </div>
-        <div class="settings-card">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-            <div class="gc-icon" style="background:rgba(55,138,221,0.1);margin-bottom:0"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="var(--blue2)" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="var(--blue2)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-            <div class="gc-title" style="margin-bottom:0">Athletic trainer partnerships</div>
-          </div>
-          <div class="gc-body">Approach certified ATCs at colleges and pro sports teams. One ATC prescribing your app to a roster is 50 high-intent users in a single deal.</div>
-          <div class="gc-tags"><span class="gc-tag">B2B</span><span class="gc-tag">High LTV</span><span class="gc-tag">Fast growth</span></div>
-        </div>
-      </div>
+    <div class="settings-card">
+      <table class="s-table">
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Volume</th>
+            <th style="min-width:200px">Conversion</th>
+            <th>Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600">Organic visitors</td>
+            <td style="color:var(--blue2);font-weight:600">14,200/mo</td>
+            <td><div class="s-pct-wrap"><div class="s-pct-bar"><div class="s-pct-fill" style="width:100%;background:#378ADD"></div></div></div></td>
+            <td style="color:var(--text3)">100%</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600">App installs</td>
+            <td style="color:var(--teal2);font-weight:600">2,840/mo</td>
+            <td><div class="s-pct-wrap"><div class="s-pct-bar"><div class="s-pct-fill" style="width:20%;background:#1D9E75"></div></div></div></td>
+            <td style="color:var(--text3)">20%</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600">Active users (7d)</td>
+            <td style="color:var(--teal2);font-weight:600">1,560/mo</td>
+            <td><div class="s-pct-wrap"><div class="s-pct-bar"><div class="s-pct-fill" style="width:11%;background:#5DCAA5"></div></div></div></td>
+            <td style="color:var(--text3)">11%</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600">PT referrals</td>
+            <td style="color:var(--amber2);font-weight:600">340/mo</td>
+            <td><div class="s-pct-wrap"><div class="s-pct-bar"><div class="s-pct-fill" style="width:2.4%;background:#EF9F27"></div></div></div></td>
+            <td style="color:var(--text3)">2.4%</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600">Paid subscriptions</td>
+            <td style="color:var(--coral2);font-weight:600">128/mo</td>
+            <td><div class="s-pct-wrap"><div class="s-pct-bar"><div class="s-pct-fill" style="width:0.9%;background:#D85A30"></div></div></div></td>
+            <td style="color:var(--text3)">0.9%</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- Channel strategy -->
+    <!-- ── Channel strategy ── -->
     <div class="settings-section-title">Channel strategy</div>
-    <div class="settings-four-col">
-      <div class="settings-card">
-        <div class="gc-icon" style="background:rgba(239,159,39,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 14l4-8 4 8M6 11h4" stroke="var(--amber2)" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        <div class="gc-title">Short-form video</div>
-        <div class="gc-body">Post 30-second exercise demos on TikTok and Reels. Injured athletes actively search this content.</div>
-        <div class="gc-tags"><span class="gc-tag">TikTok</span><span class="gc-tag">Instagram</span></div>
+    <div class="s-accordion">
+
+      <div class="s-acc-item" id="acc-seo">
+        <div class="s-acc-hdr" onclick="toggleAcc('acc-seo')">
+          <div class="s-acc-icon" style="background:rgba(29,158,117,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.5 4.5H15l-3.8 2.8 1.5 4.5L9 11l-3.7 2.8 1.5-4.5L3 6.5h4.5z" stroke="var(--teal2)" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+          <span class="s-acc-title">Content SEO strategy</span>
+          <div class="s-acc-tags"><span class="s-tag">Organic</span><span class="s-tag">Low cost</span><span class="s-tag">Long-term</span></div>
+          <span class="s-acc-chv">›</span>
+        </div>
+        <div class="s-acc-body">Target injury-specific long-tail keywords. "ACL recovery exercises week 3" gets 12k searches/mo. Build a content hub around each injury type — each article funnels high-intent users directly into the app. Low production cost, compounding returns over time.</div>
       </div>
-      <div class="settings-card">
-        <div class="gc-icon" style="background:rgba(93,202,165,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M3 5h8M3 13h10" stroke="var(--teal2)" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-        <div class="gc-title">Streak sharing</div>
-        <div class="gc-body">Let users share recovery milestone cards. "Day 30 — ACL recovery" posts drive authentic installs.</div>
-        <div class="gc-tags"><span class="gc-tag">Viral loop</span><span class="gc-tag">Zero cost</span></div>
+
+      <div class="s-acc-item" id="acc-atc">
+        <div class="s-acc-hdr" onclick="toggleAcc('acc-atc')">
+          <div class="s-acc-icon" style="background:rgba(55,138,221,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="var(--blue2)" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="var(--blue2)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="s-acc-title">Athletic trainer partnerships</span>
+          <div class="s-acc-tags"><span class="s-tag">B2B</span><span class="s-tag">High LTV</span><span class="s-tag">Fast growth</span></div>
+          <span class="s-acc-chv">›</span>
+        </div>
+        <div class="s-acc-body">Approach certified ATCs at colleges and pro sports teams. One ATC prescribing your app to a roster of 50 athletes is 50 high-intent users acquired in a single conversation. Build a referral incentive and track conversions per ATC partner.</div>
       </div>
-      <div class="settings-card">
-        <div class="gc-icon" style="background:rgba(127,119,221,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="3" stroke="var(--purple)" stroke-width="1.2"/><path d="M7 9l2 2 4-4" stroke="var(--purple)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-        <div class="gc-title">Insurance partnerships</div>
-        <div class="gc-body">Many insurers will cover a clinically-backed recovery app if outcomes data shows reduced re-injury rates.</div>
-        <div class="gc-tags"><span class="gc-tag">Enterprise</span><span class="gc-tag">High revenue</span></div>
+
+      <div class="s-acc-item" id="acc-video">
+        <div class="s-acc-hdr" onclick="toggleAcc('acc-video')">
+          <div class="s-acc-icon" style="background:rgba(239,159,39,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 14l4-8 4 8M6 11h4" stroke="var(--amber2)" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <span class="s-acc-title">Short-form video</span>
+          <div class="s-acc-tags"><span class="s-tag">TikTok</span><span class="s-tag">Instagram</span><span class="s-tag">YouTube Shorts</span></div>
+          <span class="s-acc-chv">›</span>
+        </div>
+        <div class="s-acc-body">Post 30-second "day X of recovery" exercise demos on TikTok and Reels. Injured athletes actively search this content. Link bio to app download. Low production cost, high reach — a single viral clip can drive thousands of installs.</div>
       </div>
-      <div class="settings-card">
-        <div class="gc-icon" style="background:rgba(216,90,48,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3" stroke="var(--coral2)" stroke-width="1.2"/><path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="var(--coral2)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-        <div class="gc-title">Team licensing</div>
-        <div class="gc-body">License to college athletic departments and semi-pro teams. Annual contracts $5k–25k per institution.</div>
-        <div class="gc-tags"><span class="gc-tag">NCAA</span><span class="gc-tag">Annual contract</span></div>
+
+      <div class="s-acc-item" id="acc-streak">
+        <div class="s-acc-hdr" onclick="toggleAcc('acc-streak')">
+          <div class="s-acc-icon" style="background:rgba(93,202,165,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M3 5h8M3 13h10" stroke="var(--teal2)" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <span class="s-acc-title">Streak sharing</span>
+          <div class="s-acc-tags"><span class="s-tag">Viral loop</span><span class="s-tag">Zero cost</span><span class="s-tag">High intent</span></div>
+          <span class="s-acc-chv">›</span>
+        </div>
+        <div class="s-acc-body">Let users share recovery milestones as branded cards to social media. "Day 30 — ACL recovery complete" posts are authentic user-generated content that drives installs from highly motivated audiences who relate to the journey.</div>
       </div>
+
+      <div class="s-acc-item" id="acc-insurance">
+        <div class="s-acc-hdr" onclick="toggleAcc('acc-insurance')">
+          <div class="s-acc-icon" style="background:rgba(127,119,221,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="3" stroke="var(--purple)" stroke-width="1.2"/><path d="M7 9l2 2 4-4" stroke="var(--purple)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="s-acc-title">Insurance partnerships</span>
+          <div class="s-acc-tags"><span class="s-tag">Enterprise</span><span class="s-tag">Long-term</span><span class="s-tag">High revenue</span></div>
+          <span class="s-acc-chv">›</span>
+        </div>
+        <div class="s-acc-body">Many insurers will cover or subsidize a clinically-backed recovery app when outcomes data shows reduced re-injury rates. A single insurance partnership puts RecoverAI in front of millions of members with zero acquisition cost per user.</div>
+      </div>
+
+      <div class="s-acc-item" id="acc-team">
+        <div class="s-acc-hdr" onclick="toggleAcc('acc-team')">
+          <div class="s-acc-icon" style="background:rgba(216,90,48,0.1)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3" stroke="var(--coral2)" stroke-width="1.2"/><path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="var(--coral2)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="s-acc-title">Team licensing</span>
+          <div class="s-acc-tags"><span class="s-tag">NCAA</span><span class="s-tag">Semi-pro</span><span class="s-tag">Annual contract</span></div>
+          <span class="s-acc-chv">›</span>
+        </div>
+        <div class="s-acc-body">License RecoverAI to college athletic departments and semi-pro teams as their official recovery platform. Recurring annual contracts of $5k–25k per institution with instant credibility. Each team win becomes a case study for the next deal.</div>
+      </div>
+
     </div>
 
   </div>
-
 </div>
 
 
@@ -1772,6 +1894,11 @@ window.showPage = function(p){
 
 
 buildSB();
+
+function toggleAcc(id){
+  const item=document.getElementById(id);
+  item.classList.toggle('open');
+}
 
 </script>
 
