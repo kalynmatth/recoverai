@@ -125,7 +125,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 /* ─── ANATOMY IMAGE ─── */
 .anatomy-img-wrap{position:relative;display:flex;align-items:center;justify-content:center;height:100%;width:100%}
-.anatomy-img{height:88%;width:auto;max-width:100%;object-fit:contain;opacity:0.92;filter:sepia(1) saturate(2.8) hue-rotate(110deg) brightness(0.82) contrast(1.1) drop-shadow(0 0 40px rgba(29,158,117,0.4))}
+.anatomy-figure-container{position:relative;height:88%;aspect-ratio:1;max-width:100%;flex-shrink:0}.anatomy-img{width:100%;height:100%;object-fit:contain;opacity:0.92;filter:sepia(1) saturate(2.8) hue-rotate(110deg) brightness(0.82) contrast(1.1) drop-shadow(0 0 40px rgba(29,158,117,0.4))}.anatomy-overlay{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}.muscle-zone{fill:rgba(29,158,117,0);transition:fill 0.3s ease,filter 0.3s ease;cursor:pointer;pointer-events:all}.muscle-zone:hover{fill:rgba(29,158,117,0.3);filter:drop-shadow(0 0 16px rgba(93,202,165,0.9)) drop-shadow(0 0 5px rgba(29,158,117,1))}.zone-label{transition:opacity 0.2s}.zone-label.hovered .zone-label-txt{color:#fff;text-shadow:0 0 12px rgba(93,202,165,0.95)}.zone-label.hovered .zone-circle{background:rgba(93,202,165,0.55);border-color:#5DCAA5;box-shadow:0 0 10px rgba(93,202,165,0.7)}.zone-label.hovered .zone-line{background:rgba(93,202,165,0.6)}
 .zone-label{position:absolute;display:flex;align-items:center;gap:0;cursor:pointer;z-index:5}
 .zone-label:hover .zone-label-txt{color:var(--teal2)}
 .zone-label:hover .zone-circle{border-color:var(--teal2);background:rgba(29,158,117,0.3)}
@@ -580,6 +580,18 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 <script>
 (function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".split(" ");a.get_group=function(){function b(c){d[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));a.push([e,call2])}}for(var d={},e=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<j.length;c++)b(j[c]);return d};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";g=f.getElementsByTagName("script")[0];g.parentNode.insertBefore(e,g)}})(document,window.mixpanel||[]);
 mixpanel.init("10ba7808c33c481ed4b044c28d52431b", {track_pageview: true});
+// Sync muscle zone hover state with zone labels
+function initAnatomyHover(){
+  document.querySelectorAll('.muscle-zone').forEach(zone=>{
+    const grp=zone.dataset.group;
+    const lbl=document.querySelector('.zone-label[data-group="'+grp+'"]');
+    zone.addEventListener('mouseenter',()=>{if(lbl)lbl.classList.add('hovered');});
+    zone.addEventListener('mouseleave',()=>{if(lbl)lbl.classList.remove('hovered');});
+  });
+}
+// Run on page show (home is default active page)
+document.addEventListener('DOMContentLoaded', initAnatomyHover);
+
 </script>
 </head>
 
@@ -677,36 +689,90 @@ mixpanel.init("10ba7808c33c481ed4b044c28d52431b", {track_pageview: true});
 
       <div class="anatomy-img-wrap">
 
-        <img src="anatomy.png" class="anatomy-img" alt="Human anatomy front and back view">
+        <div class="anatomy-figure-container">
 
-        <!-- Left-side labels (front figure) -->
-        <div class="zone-label" style="left:16%;top:18%" onclick="goExplore('shoulder')">
+          <img src="anatomy.png" class="anatomy-img" alt="Human anatomy front and back view">
+
+          <!-- Interactive SVG muscle zone overlay (viewBox matches 1024x1024 source image) -->
+          <svg class="anatomy-overlay" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+
+            <!-- SHOULDER: front both arms + back both arms -->
+            <g class="muscle-zone" data-group="shoulder" onclick="goExplore('shoulder')">
+              <ellipse cx="148" cy="200" rx="62" ry="50"/>
+              <ellipse cx="382" cy="200" rx="62" ry="50"/>
+              <ellipse cx="648" cy="200" rx="62" ry="50"/>
+              <ellipse cx="876" cy="200" rx="62" ry="50"/>
+            </g>
+
+            <!-- CHEST: front pecs -->
+            <g class="muscle-zone" data-group="chest" onclick="goExplore('chest')">
+              <ellipse cx="265" cy="265" rx="105" ry="72"/>
+            </g>
+
+            <!-- CORE: front abs -->
+            <g class="muscle-zone" data-group="core" onclick="goExplore('core')">
+              <ellipse cx="265" cy="378" rx="70" ry="88"/>
+            </g>
+
+            <!-- HIP: front hips + back glutes -->
+            <g class="muscle-zone" data-group="hip" onclick="goExplore('hip')">
+              <ellipse cx="265" cy="480" rx="88" ry="50"/>
+              <ellipse cx="760" cy="490" rx="94" ry="60"/>
+            </g>
+
+            <!-- KNEE: front quads+knees + back hamstrings -->
+            <g class="muscle-zone" data-group="knee" onclick="goExplore('knee')">
+              <ellipse cx="218" cy="620" rx="44" ry="88"/>
+              <ellipse cx="315" cy="620" rx="44" ry="88"/>
+              <ellipse cx="702" cy="620" rx="46" ry="88"/>
+              <ellipse cx="820" cy="620" rx="46" ry="88"/>
+            </g>
+
+            <!-- ANKLE: front + back calves/ankles -->
+            <g class="muscle-zone" data-group="ankle" onclick="goExplore('ankle')">
+              <ellipse cx="215" cy="800" rx="30" ry="72"/>
+              <ellipse cx="315" cy="800" rx="30" ry="72"/>
+              <ellipse cx="700" cy="800" rx="32" ry="72"/>
+              <ellipse cx="822" cy="800" rx="32" ry="72"/>
+            </g>
+
+            <!-- BACK: upper + mid back -->
+            <g class="muscle-zone" data-group="back" onclick="goExplore('back')">
+              <ellipse cx="760" cy="295" rx="108" ry="125"/>
+            </g>
+
+          </svg>
+
+        </div>
+
+        <!-- Zone labels (left-side, front figure) -->
+        <div class="zone-label" data-group="shoulder" style="left:16%;top:18%" onclick="goExplore('shoulder')">
           <div class="zone-circle"></div><div class="zone-line" style="width:40px"></div>
           <span class="zone-label-txt">Shoulder</span>
         </div>
-        <div class="zone-label" style="left:16%;top:32%" onclick="goExplore('chest')">
+        <div class="zone-label" data-group="chest" style="left:16%;top:32%" onclick="goExplore('chest')">
           <div class="zone-circle"></div><div class="zone-line" style="width:40px"></div>
           <span class="zone-label-txt">Chest</span>
         </div>
-        <div class="zone-label" style="left:16%;top:46%" onclick="goExplore('core')">
+        <div class="zone-label" data-group="core" style="left:16%;top:46%" onclick="goExplore('core')">
           <div class="zone-circle"></div><div class="zone-line" style="width:40px"></div>
           <span class="zone-label-txt">Core</span>
         </div>
-        <div class="zone-label" style="left:16%;top:58%" onclick="goExplore('hip')">
+        <div class="zone-label" data-group="hip" style="left:16%;top:58%" onclick="goExplore('hip')">
           <div class="zone-circle"></div><div class="zone-line" style="width:40px"></div>
           <span class="zone-label-txt">Hip</span>
         </div>
-        <div class="zone-label" style="left:16%;top:72%" onclick="goExplore('knee')">
+        <div class="zone-label" data-group="knee" style="left:16%;top:72%" onclick="goExplore('knee')">
           <div class="zone-circle"></div><div class="zone-line" style="width:40px"></div>
           <span class="zone-label-txt">Knee</span>
         </div>
-        <div class="zone-label" style="left:16%;top:88%" onclick="goExplore('ankle')">
+        <div class="zone-label" data-group="ankle" style="left:16%;top:88%" onclick="goExplore('ankle')">
           <div class="zone-circle"></div><div class="zone-line" style="width:40px"></div>
           <span class="zone-label-txt">Ankle</span>
         </div>
 
         <!-- Right-side label (back figure) -->
-        <div class="zone-label" style="right:6%;top:22%;flex-direction:row-reverse" onclick="goExplore('back')">
+        <div class="zone-label" data-group="back" style="right:6%;top:22%;flex-direction:row-reverse" onclick="goExplore('back')">
           <div class="zone-circle"></div><div class="zone-line" style="width:40px"></div>
           <span class="zone-label-txt">Back</span>
         </div>
@@ -714,6 +780,8 @@ mixpanel.init("10ba7808c33c481ed4b044c28d52431b", {track_pageview: true});
       </div>
 
     </div>
+
+  </div>
 
   </div>
 
