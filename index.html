@@ -696,50 +696,57 @@ document.addEventListener('DOMContentLoaded', initAnatomyHover);
           <!-- Interactive SVG muscle zone overlay (viewBox matches 1024x1024 source image) -->
           <svg class="anatomy-overlay" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
 
-            <!-- SHOULDER: full trapezius + deltoid width, front + back -->
+            <!-- SHOULDER: deltoid caps + trapezius — top of arm junction, full width -->
+            <!-- front y≈140-240, back same; wide to cover full deltoid span -->
             <g class="muscle-zone" data-group="shoulder" onclick="goExplore('shoulder')">
-              <ellipse cx="265" cy="192" rx="165" ry="58"/>
-              <ellipse cx="760" cy="192" rx="165" ry="58"/>
+              <ellipse cx="265" cy="192" rx="168" ry="52"/>
+              <ellipse cx="760" cy="192" rx="168" ry="52"/>
             </g>
 
-            <!-- CHEST: full pectoral + breastbone, front + back rhomboids -->
+            <!-- CHEST: full pectoral group + breastbone — clavicle to lower pec line -->
+            <!-- front y≈238-332, back rhomboids same range -->
             <g class="muscle-zone" data-group="chest" onclick="goExplore('chest')">
-              <ellipse cx="265" cy="300" rx="132" ry="82"/>
-              <ellipse cx="760" cy="300" rx="125" ry="78"/>
+              <ellipse cx="265" cy="285" rx="122" ry="72"/>
+              <ellipse cx="760" cy="285" rx="118" ry="70"/>
             </g>
 
-            <!-- CORE: full ab region ribcage-to-hip, front + erector spinae back -->
+            <!-- CORE: rectus abdominis 6-pack grid — solar plexus to hip crest -->
+            <!-- front y≈332-458, back erector spinae same range -->
             <g class="muscle-zone" data-group="core" onclick="goExplore('core')">
-              <ellipse cx="265" cy="420" rx="105" ry="108"/>
-              <ellipse cx="760" cy="420" rx="92" ry="102"/>
+              <ellipse cx="265" cy="395" rx="100" ry="85"/>
+              <ellipse cx="760" cy="395" rx="88" ry="80"/>
             </g>
 
-            <!-- HIP: full hip flexors front + full glutes back -->
+            <!-- HIP: hip flexors + pelvis front / full glutes back -->
+            <!-- y≈458-545 -->
             <g class="muscle-zone" data-group="hip" onclick="goExplore('hip')">
-              <ellipse cx="265" cy="535" rx="118" ry="62"/>
-              <ellipse cx="760" cy="535" rx="122" ry="66"/>
+              <ellipse cx="265" cy="500" rx="112" ry="52"/>
+              <ellipse cx="760" cy="500" rx="120" ry="58"/>
             </g>
 
-            <!-- KNEE: both knees front (two ellipses) + both hamstrings back -->
+            <!-- KNEE: knee caps + quads front / hamstrings + popliteal back -->
+            <!-- knee cap sits at y≈665-735; two ovals per view for left + right leg -->
             <g class="muscle-zone" data-group="knee" onclick="goExplore('knee')">
-              <ellipse cx="218" cy="670" rx="52" ry="82"/>
-              <ellipse cx="312" cy="670" rx="52" ry="82"/>
-              <ellipse cx="695" cy="665" rx="54" ry="82"/>
-              <ellipse cx="825" cy="665" rx="54" ry="82"/>
+              <ellipse cx="218" cy="700" rx="46" ry="82"/>
+              <ellipse cx="313" cy="700" rx="46" ry="82"/>
+              <ellipse cx="697" cy="695" rx="48" ry="80"/>
+              <ellipse cx="825" cy="695" rx="48" ry="80"/>
             </g>
 
-            <!-- ANKLE: both calves + ankles front and back -->
+            <!-- ANKLE: calf + ankle joint — gastrocnemius belly to ankle bone -->
+            <!-- y≈820-945; two ovals per view for each leg -->
             <g class="muscle-zone" data-group="ankle" onclick="goExplore('ankle')">
-              <ellipse cx="213" cy="845" rx="38" ry="72"/>
-              <ellipse cx="312" cy="845" rx="38" ry="72"/>
-              <ellipse cx="693" cy="845" rx="40" ry="72"/>
-              <ellipse cx="827" cy="845" rx="40" ry="72"/>
+              <ellipse cx="213" cy="862" rx="34" ry="68"/>
+              <ellipse cx="313" cy="862" rx="34" ry="68"/>
+              <ellipse cx="693" cy="858" rx="36" ry="68"/>
+              <ellipse cx="827" cy="858" rx="36" ry="68"/>
             </g>
 
-            <!-- BACK: full back — traps + lats + rhomboids + erectors -->
+            <!-- BACK: trapezius + rhomboids + lats + erectors — full posterior torso -->
+            <!-- two stacked ellipses covering neck-to-hip on back view -->
             <g class="muscle-zone" data-group="back" onclick="goExplore('back')">
-              <ellipse cx="760" cy="272" rx="118" ry="98"/>
-              <ellipse cx="760" cy="408" rx="105" ry="88"/>
+              <ellipse cx="760" cy="255" rx="120" ry="92"/>
+              <ellipse cx="760" cy="395" rx="106" ry="82"/>
             </g>
 
           </svg>
