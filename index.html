@@ -696,50 +696,46 @@ document.addEventListener('DOMContentLoaded', initAnatomyHover);
           <!-- Interactive SVG muscle zone overlay (viewBox matches 1024x1024 source image) -->
           <svg class="anatomy-overlay" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
 
-            <!-- SHOULDER: deltoid caps — lateral shoulder joints front + back -->
+            <!-- SHOULDER: centered on spine/trapezius — front + back -->
             <g class="muscle-zone" data-group="shoulder" onclick="goExplore('shoulder')">
-              <ellipse cx="22" cy="198" rx="58" ry="48"/>
-              <ellipse cx="316" cy="198" rx="58" ry="48"/>
-              <ellipse cx="536" cy="198" rx="55" ry="48"/>
-              <ellipse cx="786" cy="198" rx="55" ry="48"/>
+              <ellipse cx="265" cy="192" rx="148" ry="48"/>
+              <ellipse cx="760" cy="192" rx="148" ry="48"/>
             </g>
 
-            <!-- CHEST: pectoralis major — front only -->
+            <!-- CHEST: pectorals centered on front spine -->
             <g class="muscle-zone" data-group="chest" onclick="goExplore('chest')">
-              <ellipse cx="169" cy="295" rx="102" ry="68"/>
+              <ellipse cx="265" cy="300" rx="105" ry="68"/>
+              <ellipse cx="760" cy="300" rx="100" ry="65"/>
             </g>
 
-            <!-- CORE: rectus abdominis + obliques — front only -->
+            <!-- CORE: abs (front) + erector spinae (back) centered on spine -->
             <g class="muscle-zone" data-group="core" onclick="goExplore('core')">
-              <ellipse cx="169" cy="415" rx="70" ry="85"/>
+              <ellipse cx="265" cy="418" rx="78" ry="90"/>
+              <ellipse cx="760" cy="418" rx="72" ry="85"/>
             </g>
 
-            <!-- HIP: hip flexors (front) + glutes (back) -->
+            <!-- HIP: hip flexors (front spine) + glutes (back spine) -->
             <g class="muscle-zone" data-group="hip" onclick="goExplore('hip')">
-              <ellipse cx="169" cy="535" rx="90" ry="52"/>
-              <ellipse cx="664" cy="535" rx="94" ry="58"/>
+              <ellipse cx="265" cy="535" rx="95" ry="54"/>
+              <ellipse cx="760" cy="535" rx="100" ry="58"/>
             </g>
 
-            <!-- KNEE: quads/knee cap (front) + hamstrings (back) -->
+            <!-- KNEE: quads centered front + hamstrings centered back -->
             <g class="muscle-zone" data-group="knee" onclick="goExplore('knee')">
-              <ellipse cx="126" cy="715" rx="44" ry="52"/>
-              <ellipse cx="214" cy="715" rx="44" ry="52"/>
-              <ellipse cx="602" cy="710" rx="46" ry="54"/>
-              <ellipse cx="726" cy="710" rx="46" ry="54"/>
+              <ellipse cx="265" cy="718" rx="80" ry="58"/>
+              <ellipse cx="760" cy="718" rx="80" ry="58"/>
             </g>
 
-            <!-- ANKLE: calves + ankle joint front + back -->
+            <!-- ANKLE: calves + ankle centered on spine front + back -->
             <g class="muscle-zone" data-group="ankle" onclick="goExplore('ankle')">
-              <ellipse cx="119" cy="870" rx="30" ry="60"/>
-              <ellipse cx="217" cy="870" rx="30" ry="60"/>
-              <ellipse cx="601" cy="870" rx="32" ry="60"/>
-              <ellipse cx="727" cy="870" rx="32" ry="60"/>
+              <ellipse cx="265" cy="872" rx="60" ry="62"/>
+              <ellipse cx="760" cy="872" rx="60" ry="62"/>
             </g>
 
-            <!-- BACK: trapezius + lats + rhomboids (back view) -->
+            <!-- BACK: trapezius + lats + rhomboids centered on back spine -->
             <g class="muscle-zone" data-group="back" onclick="goExplore('back')">
-              <ellipse cx="664" cy="268" rx="92" ry="85"/>
-              <ellipse cx="664" cy="400" rx="82" ry="72"/>
+              <ellipse cx="760" cy="272" rx="98" ry="88"/>
+              <ellipse cx="760" cy="405" rx="85" ry="75"/>
             </g>
 
           </svg>
