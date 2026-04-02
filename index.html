@@ -288,9 +288,9 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 .tracker-wrap{padding:32px 40px;max-width:1200px;margin:0 auto}
 
-.tracker-hero{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:28px}
 
-.t-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px}
+
+
 
 .t-stat-n{font-size:28px;font-weight:800;letter-spacing:-.6px;margin-bottom:3px}
 
@@ -304,9 +304,9 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 .section-title-t{font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;letter-spacing:-.2px}
 
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 
-.t-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:18px}
+
+
 
 .log-form{display:flex;flex-direction:column;gap:12px}
 
@@ -574,6 +574,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .s-acc-body{display:none;padding:14px 18px 16px 62px;font-size:13px;color:var(--text2);line-height:1.7;border-top:1px solid var(--border)}
 .s-acc-item.open .s-acc-body{display:block}
 
+.tracker-hero{display:flex;flex-direction:row;gap:14px;margin-bottom:32px;width:100%}.t-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:20px 24px;flex:1;min-width:0}.t-stat-n{font-size:40px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:6px}.t-stat-l{font-size:12px;color:var(--text3);margin-bottom:8px}.t-stat-trend{font-size:11px;display:flex;align-items:center;gap:4px}.three-col{display:flex;flex-direction:row;gap:16px;align-items:flex-start}.three-col>div{flex:1;min-width:0}.t-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:20px}.section-title-t{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
 </style>
 
 <!-- Mixpanel -->
@@ -849,76 +850,47 @@ document.addEventListener('DOMContentLoaded', initAnatomyHover);
 
     </div>
 
-    <div class="two-col">
+    <div class="three-col">
 
-      <div>
-
-        <div class="t-card" style="margin-bottom:14px">
-
-          <div class="section-title-t">Log today's check-in</div>
-
-          <div class="log-form">
-
-            <div class="log-row"><span class="log-label">Pain level</span><input type="range" min="0" max="10" step="1" value="4" class="pain-slider" oninput="document.getElementById('pain-out').textContent=this.value"><span class="pain-val" id="pain-out">4</span></div>
-
-            <div class="log-row"><span class="log-label">Range of motion (°)</span><input type="range" min="0" max="135" step="5" value="78" class="pain-slider" oninput="document.getElementById('rom-out').textContent=this.value+'°'"><span class="pain-val" id="rom-out">78°</span></div>
-
-            <div class="log-row"><span class="log-label">Swelling</span><input type="range" min="0" max="4" step="1" value="1" class="pain-slider" oninput="updateSwelling(this.value)"><span class="pain-val" id="swell-out" style="font-size:11px;min-width:44px">Mild</span></div>
-
-            <div class="log-row"><span class="log-label">Session completed?</span><select style="flex:2;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:6px 10px;border-radius:8px;font-size:13px"><option>Yes — full session</option><option>Yes — partial</option><option>Rest day</option><option>Skipped</option></select></div>
-
-            <button class="log-btn" onclick="logEntry()">Save today's log</button>
-
-          </div>
-
+      <!-- COL 1: Daily check-in form -->
+      <div class="t-card">
+        <div class="section-title-t">Log today's check-in</div>
+        <div class="log-form">
+          <div class="log-row"><span class="log-label">Pain level</span><input type="range" min="0" max="10" step="1" value="4" class="pain-slider" oninput="document.getElementById('pain-out').textContent=this.value"><span class="pain-val" id="pain-out">4</span></div>
+          <div class="log-row"><span class="log-label">Range of motion (°)</span><input type="range" min="0" max="135" step="5" value="78" class="pain-slider" oninput="document.getElementById('rom-out').textContent=this.value+'°'"><span class="pain-val" id="rom-out">78°</span></div>
+          <div class="log-row"><span class="log-label">Swelling</span><input type="range" min="0" max="4" step="1" value="1" class="pain-slider" oninput="updateSwelling(this.value)"><span class="pain-val" id="swell-out" style="font-size:11px;min-width:44px">Mild</span></div>
+          <div class="log-row"><span class="log-label">Session completed?</span><select style="flex:2;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:6px 10px;border-radius:8px;font-size:13px"><option>Yes — full session</option><option>Yes — partial</option><option>Rest day</option><option>Skipped</option></select></div>
+          <button class="log-btn" onclick="logEntry()">Save today's log</button>
         </div>
-
-        <div class="t-card">
-
-          <div class="section-title-t">Activity streak</div>
-
-          <div class="streak-grid" id="streak-grid"></div>
-
-          <div style="display:flex;gap:14px;margin-top:12px">
-
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:3px;background:rgba(29,158,117,0.5)"></div>Session done</div>
-
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:3px;background:var(--teal)"></div>Today</div>
-
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:3px;background:rgba(239,159,39,0.2)"></div>Rest day</div>
-
-          </div>
-
-        </div>
-
       </div>
 
+      <!-- COL 2: Activity streak + check-in log -->
+      <div class="t-card">
+        <div class="section-title-t">Activity streak</div>
+        <div class="streak-grid" id="streak-grid"></div>
+        <div style="display:flex;gap:14px;margin-top:12px;margin-bottom:20px">
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:3px;background:rgba(29,158,117,0.5)"></div>Session done</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:3px;background:var(--teal)"></div>Today</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:3px;background:rgba(239,159,39,0.2)"></div>Rest day</div>
+        </div>
+        <div class="section-title-t" style="margin-top:4px">Recent check-ins</div>
+        <div id="log-entries" style="display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto"></div>
+      </div>
+
+      <!-- COL 3: Pain/ROM trend + milestones -->
       <div>
-
         <div class="t-card" style="margin-bottom:14px">
-
           <div class="section-title-t">Pain & ROM trend (14 days)</div>
-
           <div style="display:flex;gap:14px;margin-bottom:10px">
-
             <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:12px;height:3px;background:var(--coral2);border-radius:2px"></div>Pain (0–10)</div>
-
             <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:12px;height:3px;background:var(--teal2);border-radius:2px"></div>ROM (°)</div>
-
           </div>
-
           <div class="timeline-rows" id="pain-timeline"></div>
-
         </div>
-
         <div class="t-card">
-
           <div class="section-title-t">Recovery milestones</div>
-
           <div class="milestones" id="milestones"></div>
-
         </div>
-
       </div>
 
     </div>
