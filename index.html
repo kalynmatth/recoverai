@@ -249,16 +249,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 .tb-b{background:rgba(55,138,221,.75);color:#b8d8f8}
 
-.upload-cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(10,10,14,.85);opacity:0;transition:opacity .2s;z-index:3}
-
-.ex-c:hover .upload-cta{opacity:1}
-
-.upload-cta label{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--teal2);cursor:pointer;padding:7px 14px;border-radius:8px;border:1px solid rgba(29,158,117,.4);background:rgba(29,158,117,.1)}
-
-.upload-cta input[type=file]{display:none}
-
-.upload-cta .or-open{font-size:11px;color:var(--text3)}
-
 .ex-bd{padding:13px 15px}
 
 .ex-nm{font-size:14px;font-weight:700;margin-bottom:3px}
@@ -508,10 +498,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .mno-path{font-size:12px;color:var(--teal2);font-family:monospace;background:var(--bg3);padding:6px 14px;border-radius:6px;border:1px solid var(--border)}
 
 .mno-hint{font-size:12px;color:var(--text3);text-align:center;max-width:300px;line-height:1.6}
-
-.mno-upload label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--teal2);cursor:pointer;padding:8px 20px;border-radius:var(--r);border:1px solid rgba(29,158,117,.4);background:rgba(29,158,117,.1);margin-top:4px}
-
-.mno-upload input[type=file]{display:none}
 
 .vid-controls{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#08080c;border-bottom:1px solid var(--border)}
 
@@ -1228,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', initAnatomyHover);
 
     <div class="modal-vid-wrap" id="mvw">
 
-      <div class="modal-no-vid"><div class="mno-circle"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><polygon points="10,7 22,14 10,21" fill="#58586a"/></svg></div><div class="mno-path" id="mno-path">videos/exercise.mp4</div><div class="mno-hint">Place your .mp4 at this path or upload below.</div><div class="mno-upload"><label><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v7M3.5 4l3-3 3 3M2 10h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload video clip<input type="file" accept="video/*" onchange="handleModalUpload(event)"></label></div></div>
+      <div class="modal-no-vid"><div class="mno-circle"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><polygon points="10,7 22,14 10,21" fill="#58586a"/></svg></div><div class="mno-hint">Video coming soon</div></div>
 
     </div>
 
@@ -1358,7 +1344,7 @@ const TYPEP={p:"pp",r:"pr",b:"pb"};
 
 const TYPEB={p:"tb-p",r:"tb-r",b:"tb-b"};
 
-const videoBlobs={};
+
 
 const videoPaths={
   pendulum:'armflex.mov',bext:'armflex.mov',ytw:'armflex.mov',
@@ -1540,11 +1526,11 @@ function renderCards(exs){
 
   grid.innerHTML=exs.map(e=>{
 
-    const vidSrc=videoBlobs[e.id]||videoPaths[e.id]||'';
+    const vidSrc=videoPaths[e.id]||''; 
 
     const hv=!!vidSrc;
 
-    return `<div class="ex-c" id="card-${e.id}"><div class="vid-slot" onclick="openM('${e.id}','${aG}')">${hv?`<video id="cv-${e.id}" src="${vidSrc}" muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=0"></video><div class="vid-overlay hidden"></div>`:`<video id="cv-${e.id}" style="display:none" muted loop playsinline></video><div class="vid-overlay" id="ov-${e.id}"><div class="vid-poster-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,4 15,9 6,14" fill="#58586a"/></svg></div><span class="vid-poster-label">videos/${e.id}.mp4</span></div>`}<div class="play-ring"><svg width="10" height="10" viewBox="0 0 10 10" fill="white"><polygon points="2,1 9,5 2,9"/></svg></div><span class="dur-badge">${e.duration||"—"}</span><span class="type-badge ${TYPEB[e.type]}">${TYPEL[e.type]}</span><div class="upload-cta" onclick="event.stopPropagation()"><label><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v6M3 4l3-3 3 3M1 9h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload video<input type="file" accept="video/*" onchange="handleCardUpload(event,'${e.id}')"></label><span class="or-open">or click to preview</span></div></div><div class="ex-bd"><div class="ex-nm">${e.n}</div><div class="ex-st">${e.sets}</div><div class="ex-ft"><span class="pill ${TYPEP[e.type]}">${TYPEL[e.type]}</span><span class="ex-ph">${PHASEL[e.phase]}</span></div></div></div>`;
+    return `<div class="ex-c" id="card-${e.id}"><div class="vid-slot" onclick="openM('${e.id}','${aG}')">${hv?`<video id="cv-${e.id}" src="${vidSrc}" muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=0"></video><div class="vid-overlay hidden"></div>`:`<video id="cv-${e.id}" style="display:none" muted loop playsinline></video><div class="vid-overlay" id="ov-${e.id}"><div class="vid-poster-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,4 15,9 6,14" fill="#58586a"/></svg></div></div>`}<div class="play-ring"><svg width="10" height="10" viewBox="0 0 10 10" fill="white"><polygon points="2,1 9,5 2,9"/></svg></div><span class="dur-badge">${e.duration||"—"}</span><span class="type-badge ${TYPEB[e.type]}">${TYPEL[e.type]}</span></div><div class="ex-bd"><div class="ex-nm">${e.n}</div><div class="ex-st">${e.sets}</div><div class="ex-ft"><span class="pill ${TYPEP[e.type]}">${TYPEL[e.type]}</span><span class="ex-ph">${PHASEL[e.phase]}</span></div></div></div>`;
 
   }).join("");
 
@@ -1553,38 +1539,12 @@ function renderCards(exs){
 
 
 
-function handleCardUpload(evt,exId){
-
-  const file=evt.target.files[0];if(!file)return;
-  const ALLOWED_VIDEO=["video/mp4","video/quicktime","video/webm","video/ogg","video/x-msvideo"];if(!ALLOWED_VIDEO.includes(file.type))return;
-
-  const url=URL.createObjectURL(file);videoBlobs[exId]=url;
-
-  const v=document.getElementById("cv-"+exId),o=document.getElementById("ov-"+exId);
-
-  if(v){v.src=url;v.style.display="block";v.onmouseenter=()=>v.play();v.onmouseleave=()=>{v.pause();v.currentTime=0;};}
-
-  if(o)o.classList.add("hidden");
-
-}
 
 
 
 
-function handleModalUpload(evt){
 
-  const file=evt.target.files[0];if(!file||!curExId)return;
-  const ALLOWED_VIDEO=["video/mp4","video/quicktime","video/webm","video/ogg","video/x-msvideo"];if(!ALLOWED_VIDEO.includes(file.type))return;
 
-  const url=URL.createObjectURL(file);videoBlobs[curExId]=url;
-
-  injectModalVideo(url);
-
-  const cv=document.getElementById("cv-"+curExId),co=document.getElementById("ov-"+curExId);
-
-  if(cv){cv.src=url;cv.style.display="block";}if(co)co.classList.add("hidden");
-
-}
 
 
 
@@ -1634,7 +1594,7 @@ function openM(exId,gk){
 
   const w=document.getElementById("mvw");
 
-  const vidSrc=videoBlobs[exId]||videoPaths[exId]||'';
+  const vidSrc=videoPaths[exId]||'';
 
   if(vidSrc){
 
@@ -1655,7 +1615,7 @@ function openM(exId,gk){
 
   } else {
 
-    w.innerHTML=`<div class="modal-no-vid"><div class="mno-circle"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><polygon points="10,7 22,14 10,21" fill="#58586a"/></svg></div><div class="mno-path">${path}</div><div class="mno-hint">Place your .mp4 at this path or upload below.</div><div class="mno-upload"><label><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v7M3.5 4l3-3 3 3M2 10h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload video clip<input type="file" accept="video/*" onchange="handleModalUpload(event)"></label></div></div>`;
+    w.innerHTML=`<div class="modal-no-vid"><div class="mno-circle"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><polygon points="10,7 22,14 10,21" fill="#58586a"/></svg></div><div class="mno-hint">Video coming soon</div></div>`;
 
     modalVidEl=null;document.getElementById("vctrl").style.display="none";
 
