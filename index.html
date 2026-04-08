@@ -1347,8 +1347,10 @@ const TYPEB={p:"tb-p",r:"tb-r",b:"tb-b"};
 
 
 const videoPaths={
-  pendulum:'armflex.mov',bext:'armflex.mov',ytw:'armflex.mov',
-  wallsl:'armflex.mov',doorway:'armflex.mov',retract:'armflex.mov',
+  pendulum:'rc_pendulum.mov',wallsl:'rc_pendulum.mov',
+  bext:'rc_bext.mov',retract:'rc_bext.mov',
+  ytw:'rc_ytw.mov',
+  doorway:'armflex.mov',
   catcow:'childspose.mov',birddog:'childspose.mov',gbridge:'childspose.mov',
   slr:'jumpingjacks.mov',tke:'jumpingjacks.mov',stepdown:'jumpingjacks.mov',
   clamsh:'hipflexor.mp4',hip9090:'hipflexor.mp4',
@@ -1530,7 +1532,7 @@ function renderCards(exs){
 
     const hv=!!vidSrc;
 
-    return `<div class="ex-c" id="card-${e.id}"><div class="vid-slot" onclick="openM('${e.id}','${aG}')">${hv?`<video id="cv-${e.id}" src="${vidSrc}" muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=0"></video><div class="vid-overlay hidden"></div>`:`<video id="cv-${e.id}" style="display:none" muted loop playsinline></video><div class="vid-overlay" id="ov-${e.id}"><div class="vid-poster-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,4 15,9 6,14" fill="#58586a"/></svg></div></div>`}<div class="play-ring"><svg width="10" height="10" viewBox="0 0 10 10" fill="white"><polygon points="2,1 9,5 2,9"/></svg></div><span class="dur-badge">${e.duration||"—"}</span><span class="type-badge ${TYPEB[e.type]}">${TYPEL[e.type]}</span></div><div class="ex-bd"><div class="ex-nm">${e.n}</div><div class="ex-st">${e.sets}</div><div class="ex-ft"><span class="pill ${TYPEP[e.type]}">${TYPEL[e.type]}</span><span class="ex-ph">${PHASEL[e.phase]}</span></div></div></div>`;
+    return `<div class="ex-c" id="card-${e.id}"><div class="vid-slot" onclick="openM('${e.id}','${aG}')">${hv?`<video id="cv-${e.id}" src="${vidSrc}" muted loop playsinline preload="auto" oncanplay="if(!this.dataset.seeked){this.dataset.seeked=1;this.currentTime=this.duration*0.3}" onseeked="this.pause()" onmouseenter="this.play()" onmouseleave="this.pause();this.currentTime=this.duration*0.3"></video><div class="vid-overlay hidden"></div>`:`<video id="cv-${e.id}" style="display:none" muted loop playsinline></video><div class="vid-overlay" id="ov-${e.id}"><div class="vid-poster-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,4 15,9 6,14" fill="#58586a"/></svg></div></div>`}<div class="play-ring"><svg width="10" height="10" viewBox="0 0 10 10" fill="white"><polygon points="2,1 9,5 2,9"/></svg></div><span class="dur-badge">${e.duration||"—"}</span><span class="type-badge ${TYPEB[e.type]}">${TYPEL[e.type]}</span></div><div class="ex-bd"><div class="ex-nm">${e.n}</div><div class="ex-st">${e.sets}</div><div class="ex-ft"><span class="pill ${TYPEP[e.type]}">${TYPEL[e.type]}</span><span class="ex-ph">${PHASEL[e.phase]}</span></div></div></div>`;
 
   }).join("");
 
