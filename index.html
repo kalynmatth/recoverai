@@ -122,7 +122,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 .hero-right::before{content:"";position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,#000 0%,transparent 100%);z-index:2;pointer-events:none}
 
-.hero-right::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(29,158,117,0.07) 0%,transparent 70%);pointer-events:none;z-index:1}
+.hero-right::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 69% 95%,rgba(29,158,117,0.07) 0%,transparent 60%);pointer-events:none;z-index:1}
 
 .anatomy-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px 0}
 
@@ -369,6 +369,13 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .sg-skip{background:rgba(239,159,39,0.2);color:var(--amber2)}
 
 .sg-label{font-size:10px;color:var(--text3);text-align:center;margin-top:2px}
+
+.sg-tooltip{position:fixed;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--text);z-index:9999;pointer-events:none;opacity:0;transition:opacity .15s;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.5);transform:translate(-50%,-110%)}
+.sg-tooltip.visible{opacity:1}
+.sg-tip-title{font-weight:600;color:var(--text);margin-bottom:2px}
+.sg-tip-status{font-size:11px;margin-bottom:6px}
+.sg-tip-row{display:flex;justify-content:space-between;gap:16px;color:var(--text3);line-height:1.7}
+.sg-tip-row b{color:var(--text)}
 
 
 
@@ -1719,17 +1726,48 @@ function buildMilestones(){
 
 
 const STREAKDATA=['done','done','rest','done','done','done','done','skip','done','done','done','rest','done','done','today','','','','','',''];
+const STREAKDETAIL=Array(21).fill(null);
 
 function buildStreak(){
-
-  const g=document.getElementById('streak-grid');
-
-  if(!g||g.innerHTML!=='')return;
-
-  const labels=['M','T','W','T','F','S','S'];
-
-  g.innerHTML=STREAKDATA.map((s,i)=>`<div><div class="sg-day ${s==='done'?'sg-done':s==='today'?'sg-today':s==='rest'?'sg-rest':s==='skip'?'sg-skip':'sg-rest'}"></div><div class="sg-label">${labels[i%7]}</div></div>`).join('');
-
+  const g=document.getElementById('streak-grid');
+  if(!g)return;
+  const labels=['M','T','W','T','F','S','S'];
+  const base=new Date();
+  base.setHours(0,0,0,0);
+  g.innerHTML=STREAKDATA.map((s,i)=>{
+    const d=new Date(base);
+    d.setDate(d.getDate()-(14-i));
+    const dateStr=d.toLocaleDateString([],{month:'short',day:'numeric'});
+    const cls=s==='done'?'sg-done':s==='today'?'sg-today':s==='rest'?'sg-rest':s==='skip'?'sg-skip':'sg-rest';
+    const active=s&&s!=='';
+    return `<div><div class="sg-day ${cls}${active?' sg-active':''}" data-i="${i}" data-date="${dateStr}" data-status="${s}"></div><div class="sg-label">${labels[i%7]}</div></div>`;
+  }).join('');
+  let tip=document.getElementById('sg-tip');
+  if(!tip){tip=document.createElement('div');tip.id='sg-tip';tip.className='sg-tooltip';document.body.appendChild(tip);}
+  g.querySelectorAll('.sg-active').forEach(el=>{
+    el.addEventListener('mouseenter',e=>{
+      const s=el.dataset.status;
+      if(!s||s==='')return;
+      const i=parseInt(el.dataset.i);
+      const detail=STREAKDETAIL[i];
+      const pain=detail?detail.pain:(i<14?PAIN[i]:null);
+      const rom=detail?detail.rom:(i<14?ROM[i]:null);
+      const swell=detail?detail.swell:null;
+      const session=detail?detail.session:null;
+      const statusLabel=s==='done'?(session||'Session done'):s==='today'?'Today':s==='rest'?'Rest day':'Skipped';
+      const statusColor=s==='done'||s==='today'?'var(--teal2)':s==='rest'?'var(--text3)':'var(--amber2)';
+      let html=`<div class="sg-tip-title">${el.dataset.date}</div><div class="sg-tip-status" style="color:${statusColor}">${statusLabel}</div>`;
+      if(pain!=null)html+=`<div class="sg-tip-row"><span>Pain</span><b>${parseFloat(pain).toFixed(1)}/10</b></div>`;
+      if(rom!=null)html+=`<div class="sg-tip-row"><span>ROM</span><b>${rom}°</b></div>`;
+      if(swell)html+=`<div class="sg-tip-row"><span>Swelling</span><b>${swell}</b></div>`;
+      tip.innerHTML=html;
+      const r=el.getBoundingClientRect();
+      tip.style.left=(r.left+r.width/2)+'px';
+      tip.style.top=r.top+'px';
+      tip.classList.add('visible');
+    });
+    el.addEventListener('mouseleave',()=>tip.classList.remove('visible'));
+  });
 }
 
 
@@ -1737,7 +1775,41 @@ function buildStreak(){
 
 function updateSwelling(v){const labels=['None','Mild','Moderate','Significant','Severe'];document.getElementById('swell-out').textContent=labels[v]||'None';}
 
-function logEntry(){if(typeof mixpanel!=='undefined')mixpanel.track('Check-in Logged');const btn=document.querySelector('.log-btn');btn.textContent='Saved!';btn.style.background='var(--teal2)';setTimeout(()=>{btn.textContent="Save today's log";btn.style.background='var(--teal)';},2000);}
+function logEntry(){
+  if(typeof mixpanel!=='undefined')mixpanel.track('Check-in Logged');
+  const sliders=document.querySelectorAll('.pain-slider');
+  const pain=sliders[0]?sliders[0].value:'4';
+  const rom=sliders[1]?sliders[1].value:'78';
+  const swellVal=sliders[2]?parseInt(sliders[2].value):1;
+  const swellLabels=['None','Mild','Moderate','Significant','Severe'];
+  const swell=swellLabels[swellVal]||'None';
+  const sessionEl=document.querySelector('.log-form select');
+  const session=sessionEl?sessionEl.value:'Yes — full session';
+  let status='done';
+  if(session==='Rest day')status='rest';
+  else if(session==='Skipped')status='skip';
+  STREAKDATA[14]=status;
+  STREAKDETAIL[14]={pain,rom,swell,session};
+  const g=document.getElementById('streak-grid');
+  if(g)g.innerHTML='';
+  buildStreak();
+  const now=new Date();
+  const timeStr=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const dateStr=now.toLocaleDateString([],{month:'short',day:'numeric'});
+  const entries=document.getElementById('log-entries');
+  if(entries){
+    const div=document.createElement('div');
+    div.style.cssText='background:var(--bg3);border-radius:8px;padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px;border:1px solid var(--border2)';
+    const statusColor=status==='done'?'var(--teal2)':status==='rest'?'var(--text3)':'var(--amber2)';
+    const statusLabel=status==='done'?session:status==='rest'?'Rest day':'Skipped';
+    div.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;color:var(--text)">${dateStr} · ${timeStr}</span><span style="color:${statusColor};font-size:11px">${statusLabel}</span></div><div style="display:flex;gap:12px;color:var(--text3)"><span>Pain <b style="color:var(--text)">${pain}/10</b></span><span>ROM <b style="color:var(--text)">${rom}°</b></span><span>Swelling <b style="color:var(--text)">${swell}</b></span></div>`;
+    entries.insertBefore(div,entries.firstChild);
+  }
+  const btn=document.querySelector('.log-btn');
+  btn.textContent='Saved!';
+  btn.style.background='var(--teal2)';
+  setTimeout(()=>{btn.textContent="Save today's log";btn.style.background='var(--teal)';},2000);
+}
 
 
 
